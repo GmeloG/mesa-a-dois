@@ -5,12 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#087e70" />
     <meta name="description" content="Refeições, calorias, macros e compras para o Gonçalo e a Inês." />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Mesa a Dois" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="apple-touch-icon" href="%BASE_URL%icon-192.png" />
     <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
     <title>Mesa a Dois · Refeições e compras</title>
+    <script>
+      // Arranque defensivo: corre antes de qualquer outro ficheiro e evita uma página branca.
+      (function () {
+        var shown = false;
+        function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+        function show(title, detail) {
+          if (shown || window.__mesaBooted) return;
+          shown = true;
+          var render = function () {
+            var root = document.getElementById('root');
+            if (!root) return;
+            root.innerHTML = '<main style="font-family:system-ui,sans-serif;max-width:32rem;margin:10vh auto;padding:1.5rem;color:#15252c">' +
+              '<h1 style="font-size:1.4rem">' + esc(title) + '</h1><p style="line-height:1.5">' + esc(detail) + '</p>' +
+              '<p><button id="boot-retry" style="padding:.7rem 1.1rem;border-radius:.6rem;border:0;background:#087e70;color:#fff;font-size:1rem">Tentar novamente</button> ' +
+              '<button id="boot-clean" style="padding:.7rem 1.1rem;border-radius:.6rem;border:1px solid #c9d3d8;background:#fff;font-size:1rem">Limpar cache e recarregar</button></p></main>';
+            document.getElementById('boot-retry').onclick = function () { location.reload(); };
+            document.getElementById('boot-clean').onclick = function () {
+              var jobs = [];
+              if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (r) { return Promise.all(r.map(function (x) { return x.unregister(); })); }));
+              if (window.caches) jobs.push(caches.keys().then(function (k) { return Promise.all(k.map(function (x) { return caches.delete(x); })); }));
+              Promise.all(jobs).catch(function () {}).then(function () { location.reload(); });
+            };
+          };
+          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render); else render();
+        }
+        window.__mesaShowBootError = show;
+        window.addEventListener('error', function (event) {
+          var target = event.target;
+          if (target && target.tagName === 'SCRIPT') {
+            var src = target.src || '';
+            if (/firebase-config\.js/.test(src)) { window.MESA_CONFIG_ERROR = 'O ficheiro firebase-config.js não foi encontrado.'; return; }
+            if (/\/app\/main\.tsx/.test(src)) return show('Publicação incorreta no GitHub Pages', 'O site está a servir o código-fonte em vez da versão compilada. Em Settings → Pages, escolhe Source = GitHub Actions e volta a correr o workflow.');
+            return show('Não foi possível carregar a aplicação', 'Um ficheiro JavaScript não carregou (' + src + '). Verifica a ligação à internet. Se o problema persistir após uma atualização, limpa a cache.');
+          }
+          if (event.filename && /firebase-config\.js/.test(event.filename)) {
+            window.MESA_CONFIG_ERROR = 'O ficheiro firebase-config.js tem um erro (' + event.message + '). Deve conter apenas window.MESA_FIREBASE_CONFIG = { ... }, sem "import".';
+            event.preventDefault();
+            return;
+          }
+          if (!window.__mesaBooted) show('A aplicação encontrou um erro ao iniciar', event.message || 'Erro desconhecido.');
+        }, true);
+        window.addEventListener('unhandledrejection', function (event) {
+          if (!window.__mesaBooted) show('A aplicação encontrou um erro ao iniciar', (event.reason && event.reason.message) || String(event.reason));
+        });
+        setTimeout(function () {
+          if (!window.__mesaBooted) show('A aplicação não arrancou', 'Os ficheiros demoraram demasiado a carregar ou não existem. Verifica a ligação. Se publicaste no GitHub Pages, confirma que Settings → Pages usa Source = GitHub Actions e que o workflow terminou sem erros.');
+        }, 15000);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

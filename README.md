@@ -15,6 +15,10 @@ Abrir o endereço mostrado no terminal. Escolher **Experimentar demonstração**
 
 Os comandos acima são para Windows e evitam permissões de administrador. Em macOS/Linux, usa `npx` em vez de `npx.cmd`.
 
+Nos restantes comandos deste README, `pnpm X` corresponde no Windows a `npx.cmd --yes pnpm@11.25.0 X`.
+
+Se a pasta do projeto estiver no OneDrive, a pasta `node_modules/` (dezenas de milhares de ficheiros) será sincronizada. É preferível trabalhar numa cópia fora do OneDrive (por exemplo `C:\Users\<nome>\dev\mesa-a-dois`) e usar o GitHub como cópia de segurança.
+
 O ZIP contém apenas o código e a configuração necessários. `node_modules/` é criada ao instalar dependências; `dist/` é criada ao compilar. Não é necessário carregar nenhuma dessas pastas para o GitHub. Não abrir index.html por duplo clique.
 
 Se já configuraste o Firebase numa versão anterior, guarda uma cópia de `public/firebase-config.js` e repõe-a na pasta nova depois de extrair o ZIP.
@@ -22,7 +26,7 @@ Se já configuraste o Firebase numa versão anterior, guarda uma cópia de `publ
 ## 1. Configurar o Firebase
 
 1. Na consola Firebase, criar um projeto e registar uma **aplicação Web**. Não ativar Hosting.
-2. Em Definições do projeto → As tuas aplicações, copiar a configuração Web para **public/firebase-config.js**. Preencher apiKey, authDomain, projectId e appId. Os valores Web são identificadores públicos; a proteção dos dados está nas regras e na autenticação. Nunca colocar ficheiros de conta de serviço, chaves privadas ou palavras-passe no repositório.
+2. Em Definições do projeto → As tuas aplicações, copiar **apenas os valores** da configuração Web para **public/firebase-config.js** (há um modelo em `firebase-config.example.js`). O ficheiro deve ter a forma `window.MESA_FIREBASE_CONFIG = { apiKey: "...", authDomain: "...", projectId: "...", appId: "..." };`. **Não colar o exemplo da consola com `import { initializeApp } ...`**: esse formato não funciona aqui e a aplicação mostra "Falta configurar o Firebase". Os valores Web são identificadores públicos; a proteção dos dados está nas regras e na autenticação. Nunca colocar ficheiros de conta de serviço, chaves privadas ou palavras-passe no repositório.
 3. Em **Authentication → Sign-in method**, ativar Email/Password. Em **Users**, criar as duas contas, uma para cada pessoa. Guardar as palavras-passe de forma privada e copiar os dois UID.
 4. Em **Firestore Database**, criar a base `(default)` em modo de produção. Usar Cloud Firestore Standard/Native. Escolher a região adequada antes de criar a base.
 5. No separador **Rules**, substituir as regras pelo conteúdo de `firestore.rules` e publicar. Não usar regras de acesso público ou modo de teste.
@@ -31,7 +35,7 @@ Se já configuraste o Firebase numa versão anterior, guarda uma cópia de `publ
 
 Ao entrar pela primeira vez, a aplicação cria o documento `households/goncalo-ines/state/main`. Os dois utilizadores consultam e editam esse mesmo plano. As metas começam por definir e o plano real começa vazio. O botão **Usar semana de exemplo** é opcional.
 
-As regras estão testadas com o emulador: apenas membros autorizados acedem ao respetivo plano, ninguém consegue conceder acesso a si próprio e gravações com uma revisão antiga são recusadas. Os valores nutricionais e o formato completo dos dados são validados pela aplicação; as regras validam o acesso, o limite do documento, os campos e as revisões.
+As regras têm testes automáticos para o emulador (`pnpm test:rules`): apenas membros autorizados acedem ao respetivo plano, ninguém consegue conceder acesso a si próprio e gravações com uma revisão antiga são recusadas. Os valores nutricionais e o formato completo dos dados são validados pela aplicação; as regras validam o acesso, o limite do documento, os campos e as revisões.
 
 ## 2. Publicar no GitHub Pages
 
@@ -57,11 +61,14 @@ Depois de abrir o plano com ligação, pode consultar-se a última cópia guarda
 - Hoje, plano semanal, receitas, compras e perfis, com navegação móvel.
 - Pequeno-almoço, dois lanches, almoço, jantar e ceia opcional.
 - Quantidades por pessoa e por ingrediente; refeições só para um ou para os dois; copiar/mover refeições e duplicar a semana.
-- Calorias, proteína, hidratos de carbono e gordura por refeição e totais diários por pessoa. Metas pessoais editáveis, sem objetivos prescritos.
+- Calorias, proteína, hidratos de carbono e gordura por refeição e por pessoa, total a preparar, totais diários dos dois, resumo semanal (total e média diária) por pessoa face às metas.
+- Alimentos sem dados nutricionais nunca contam como 0 kcal: os totais aparecem como «≥» e indicam o que falta. Valores de exemplo aparecem como estimados («≈»). Refeições fora de casa ficam com nutrição desconhecida, a menos que se introduzam os valores. Metas pessoais editáveis, sem objetivos prescritos.
 - Biblioteca de receitas e alimentos editáveis, favoritos e pesquisa; 10 receitas e 25 alimentos de exemplo.
-- Sugestões a partir da biblioteca, considerando preferências, despensa e variedade. A criação de receitas é manual; não se apresenta como geração por IA.
+- Sugestões a partir da biblioteca para o próximo horário vazio, considerando categoria, preferências, alimentos a evitar, despensa e variedade. Identificadas como sugestões baseadas em regras; nunca substituem refeições automaticamente.
+- Receita a partir de ingredientes escolhidos: proposta gerada por **regras predefinidas** (não IA), com quantidades indicativas e passos, que se revê e edita antes de guardar ou planear. Criação manual sempre disponível. Não há serviços de IA externos nem chaves no código.
 - Lista de compras por secção, com origem das quantidades, despensa descontada uma vez, embalagens apenas quando definidas, artigos manuais e aviso de quantidades alteradas após marcar comprado.
-- Preparações para vários dias, sem somar duas vezes os ingredientes das porções reservadas.
+- Preparações para vários dias, com quantidades preparadas, reservadas e disponíveis; não é possível distribuir mais do que o preparado e os ingredientes contam uma só vez nas compras.
+- Desfazer eliminações de refeições, receitas, preparações e artigos manuais.
 - Sincronização Firestore em tempo real e transações para detetar alterações concorrentes.
 - PWA, ícones, manifesto e service worker gerado na compilação; cache limitada à pasta deste site.
 
@@ -77,10 +84,16 @@ O stock corresponde ao que declaras disponível para o intervalo selecionado. Ma
 
 O MVP usa um documento JSON por agregado, com limite preventivo de 800 KB e revisão monotónica. Para vários anos de histórico ou muitos utilizadores, deverá dividir-se o estado em documentos próprios. A consulta offline fica no armazenamento local do navegador por conta. Não existe importação automática da anterior versão D1.
 
+## Erros e atualizações
+
+- Se o JavaScript não carregar, se o site estiver a servir o código-fonte (GitHub Pages com a origem errada) ou se ocorrer um erro antes de o React arrancar, aparece uma mensagem com **Tentar novamente** e **Limpar cache e recarregar** — nunca uma página branca.
+- Configuração Firebase ausente, por preencher ou com `import` mostra uma mensagem específica no ecrã de entrada (a demonstração continua disponível).
+- Quando é publicada uma versão nova, o service worker ativa-se de imediato e a aplicação mostra **Nova versão disponível · Atualizar agora**, sem recarregar a meio de uma edição.
+
 ## Desenvolvimento e testes
 
 ```sh
-pnpm test          # 9 testes de quantidades, macros e compras
+pnpm test          # 20 testes de quantidades, macros, compras, preparações e validação
 pnpm typecheck
 pnpm build         # dist estático, manifesto e cache offline
 pnpm preview
@@ -89,7 +102,15 @@ pnpm test:rules    # 8 testes das permissões; requer Java 17+ (21 recomendado)
 
 Os testes de regras usam exclusivamente o projeto de emulador `demo-mesa-a-dois`, sem credenciais de produção. `firebase.json` configura os emuladores e os ficheiros de regras/índices. Opcionalmente, copiar `.env.example` para `.env` e definir VITE_FIREBASE_EMULATORS=true para ligar o desenvolvimento aos emuladores locais (Auth 9099 e Firestore 8080). Nunca ativar essa opção numa publicação.
 
-Validação desta entrega: 9 testes de cálculo e 8 testes de regras passaram; TypeScript e compilação estática concluídos. No navegador foram verificadas a demonstração, a gravação de porções diferentes (90/60 g de arroz e 200/150 g de frango), a persistência após recarregar, os macros por pessoa e a apresentação das compras. A configuração real do Firebase, a publicação no repositório e a instalação nos telemóveis ficam pendentes até serem fornecidos/configurados pelo proprietário.
+### Validação desta entrega (v0.3)
+
+Executado localmente (Linux, Node 22):
+
+- `pnpm test`: 20/20 testes de cálculo, incluindo o caso obrigatório (90 g + 60 g de arroz × 2 = 300 g; com 100 g em casa faltam 200 g), lanches nas compras, substituir/remover refeições, despensa descontada uma vez, preparações sem duplicação, fora de casa e nutrição desconhecida.
+- `pnpm typecheck` e `pnpm build`: sem erros.
+- Teste no navegador (Chromium, ecrã de telemóvel 390×844, compilação de produção, modo demonstração): porções 90/60 g de arroz e 200/150 g de frango com total a preparar 150 g/350 g; compras com lanches; resumo semanal; proposta de receita por regras; fora de casa; persistência após recarregar; deteção de alteração concorrente entre dois separadores; abertura offline pelo service worker; mensagens para configuração Firebase com `import`, ausente ou por preencher, JavaScript que não carrega e Pages a servir o código-fonte. Sem erros na consola.
+
+**Não testado nesta entrega:** `pnpm test:rules` (o emulador do Firestore não pôde ser descarregado neste ambiente — correr no teu computador, requer Java), login e sincronização com o Firebase real, partilha entre as duas contas reais, bloqueio de contas não autorizadas no projeto real, publicação no GitHub Pages e instalação nos telemóveis. Estes passos dependem da tua configuração e devem ser confirmados depois de publicar.
 
 ## Documentação oficial
 

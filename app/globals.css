@@ -756,3 +756,37 @@ SOFTWARE.
 .field,.note,.check-label{font-size:14px}.macro-line,.recipe-meta,.recipe-tags>span,.meal-people span,.ingredient-summary,.nutrition-note,.macro-card>small,.shopping-name small,.shopping-amount small,.ingredient small,.suggestion small{font-size:12px}.macro-line>strong small{font-size:12px}.slot-number{font-size:12px}.weekly-meal span,.weekly-meal small,.weekly-slot>small{font-size:12px}.recipe-category{font-size:12px}.mobile-nav button span{font-size:12px}
 @media(max-width:767px){.day-button small{display:none}.day-button>span{font-size:12px}.macro-line{gap:8px}.macro-card>small{font-size:12px}.nutrition-note{font-size:12px}.ingredient-summary{font-size:12px}.meal-card-main{gap:9px}.meal-marker{display:none}.shopping-row>details summary{font-size:12px}.form-stack .check-label{font-size:14px}}
 .login-page{min-height:100dvh;display:grid;place-items:center;padding:30px 20px;background:radial-gradient(ellipse at top right,#d7f0e6,transparent 65%),#f5f7fa}.login-card{width:100%;max-width:440px;padding:34px;background:white;border:1px solid #dfebe5;border-radius:20px;box-shadow:0 20px 80px #14372a10}.login-logo{width:54px;height:54px;margin-bottom:24px}.login-card h1{font-size:34px}.login-card .subtitle{line-height:1.7;margin-bottom:28px}.login-card .notice{margin-top:20px}.login-card .notice p{margin-top:8px}.demo-entry{margin-top:22px;padding-top:22px;border-top:1px solid #e6ece9;text-align:center}.demo-entry button{width:100%}.demo-entry small{display:block;font-size:12px;color:#70867d;line-height:1.7;margin-top:12px}.login-error{color:#a23d34;background:#fff0ee;padding:14px;border-radius:8px;font-size:14px;margin-top:15px}.demo-banner{justify-content:space-between;gap:12px}.demo-banner button{flex-shrink:0;font-size:12px}.demo-banner span{font-size:13px}@media(max-width:500px){.login-card{padding:26px}.demo-banner{align-items:flex-start;flex-direction:column}}
+
+/* ---- Melhorias v0.3 ---- */
+.unknown-badge,.estimate-badge,.example-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:600;line-height:1.5}
+.unknown-badge{background:#fff4e5;color:#8a4b00}
+.estimate-badge{background:#eef2f4;color:#5d6f75}
+.example-badge{background:#e5f4ef;color:#087e70}
+.macro-line.unknown strong{color:#8a4b00}
+.muted{color:#70867d;font-size:11px}
+.people-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 6px}
+.person-total{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border:1px solid #e0e7e9;border-radius:10px;background:#fff}
+.person-total.active{border-color:#087e70;box-shadow:0 0 0 1px #087e70}
+.person-total strong{display:block;font-size:14px}.person-total small{display:block;font-size:12px;color:#5d6f75}
+.prepare-total{font-size:12px;color:#33484f;line-height:1.6;margin-top:6px}
+.per-person{display:grid;gap:6px}.per-person>div{display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap}
+.recipe-totals{display:grid;gap:8px}.recipe-totals small{color:#70867d}
+.outside-values{border:1px solid #e0e7e9;border-radius:10px;padding:12px;display:grid;gap:10px}.outside-values legend{font-weight:700;padding:0 6px}
+.food-picker{display:grid;gap:8px;max-height:40dvh;overflow:auto;padding:4px;border:1px solid #e0e7e9;border-radius:10px}.food-picker small{color:#70867d}
+.week-summary{margin-bottom:28px}.week-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.week-person{background:#fff;border:1px solid #e0e7e9;border-radius:12px;padding:18px;display:grid;gap:12px}
+.week-person table,.batch-table{width:100%;border-collapse:collapse;font-size:13px}
+.week-person th,.week-person td,.batch-table th,.batch-table td{text-align:right;padding:6px 4px;border-bottom:1px solid #eef2f4}
+.week-person th:first-child,.batch-table th:first-child,.batch-table td:first-child{text-align:left}
+.week-person thead th,.batch-table thead th{font-size:11px;color:#70867d;font-weight:600}
+.batch-table{margin:10px 0 14px}
+.shopping-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:10px 0}.shopping-breakdown div{background:#f5f7fa;border-radius:8px;padding:8px}.shopping-breakdown dt{font-size:11px;color:#70867d}.shopping-breakdown dd{font-weight:700}
+.range-shortcuts button{font-size:12px}
+.steps{white-space:pre-line}
+.day-button.is-today strong{text-decoration:underline;text-underline-offset:4px}
+.sync-status.is-offline{color:#8a4b00}
+.mobile-nav button{position:relative}.nav-badge{position:absolute;top:0;right:calc(50% - 22px);min-width:18px;height:18px;border-radius:9px;background:#087e70;color:#fff!important;font-size:10px!important;display:grid;place-items:center;padding:0 4px}
+.update-banner{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));z-index:60;display:flex;align-items:center;gap:12px;background:#15252c;color:#fff;padding:10px 14px;border-radius:12px;box-shadow:0 10px 30px #0003;font-size:14px}
+.update-banner button{background:#087e70;color:#fff;border-radius:8px;padding:6px 10px;font-weight:600}
+.error-detail{white-space:pre-wrap;font-size:12px;background:#f5f7fa;padding:10px;border-radius:8px;margin:12px 0;max-height:30vh;overflow:auto}
+@media(max-width:767px){.week-summary-grid{grid-template-columns:1fr}.people-summary{gap:8px}.person-total{padding:9px 10px}.person-total small{font-size:11px}.day-rail{overflow-x:auto}}

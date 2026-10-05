@@ -11,7 +11,11 @@ export type Food = {
     basis: number;
     state: string;
     section: string;
-    nutrition: Macros;
+    /** null = valores nutricionais desconhecidos (nunca tratados como zero). */
+    nutrition: Macros | null;
+    /** true = valores estimados/genéricos, ainda não confirmados num rótulo. */
+    estimated?: boolean;
+    brand?: string;
     source: string;
     pack?: number;
 };
@@ -43,6 +47,8 @@ export type Meal = {
     name: string;
     portions: Partial<Record<Person, Ingredient[]>>;
     outside: boolean;
+    /** Valores conhecidos de uma refeição fora de casa; ausentes = desconhecidos. */
+    outsideMacros?: Partial<Record<Person, Macros>>;
     batchId?: string;
 };
 export type Batch = {
@@ -50,6 +56,8 @@ export type Batch = {
     name: string;
     date: string;
     ingredients: Ingredient[];
+    recipeId?: string;
+    servings?: number;
 };
 export type Profile = {
     name: string;
@@ -75,12 +83,56 @@ export type State = {
     manual: ManualItem[];
 };
 export const zero = (): Macros => ({ kcal: 0, protein: 0, carbs: 0, fat: 0 });
-export function nutrition(items: Ingredient[], foods: Food[]): Macros {
-    return items.reduce((total, item) => { const food = foods.find(f => f.id === item.foodId); if (!food)
-        throw new Error('Alimento não encontrado'); for (const key of Object.keys(total) as (keyof Macros)[])
-        total[key] += food.nutrition[key] * item.quantity / food.basis; return total; }, zero());
+export const MACRO_KEYS = ['kcal', 'protein', 'carbs', 'fat'] as const;
+/** Macros somados + o que ficou de fora: alimentos sem dados (missing) e se há valores estimados. */
+export type Nutrition = Macros & { missing: string[]; estimated: boolean };
+export const emptyNutrition = (): Nutrition => ({ ...zero(), missing: [], estimated: false });
+function addMacros(total: Nutrition, values: Macros, factor = 1) { for (const key of MACRO_KEYS) total[key] += values[key] * factor; }
+export function nutrition(items: Ingredient[], foods: Food[]): Nutrition {
+    const total = emptyNutrition();
+    for (const item of items) {
+        const food = foods.find(f => f.id === item.foodId);
+        if (!food) { total.missing.push('Alimento removido'); continue; }
+        if (item.quantity === 0) continue;
+        if (!food.nutrition) { if (!total.missing.includes(food.name)) total.missing.push(food.name); continue; }
+        if (food.estimated) total.estimated = true;
+        addMacros(total, food.nutrition, item.quantity / food.basis);
+    }
+    return total;
 }
-export function totals(state: State, date: string, person: Person) { return nutrition(state.meals.filter(m => m.date === date && !m.outside).flatMap(m => m.portions[person] || []), state.foods); }
+export function mealNutrition(meal: Meal, person: Person, foods: Food[]): Nutrition | null {
+    if (!meal.portions[person]) return null;
+    if (meal.outside) {
+        const known = meal.outsideMacros?.[person];
+        const result = emptyNutrition();
+        if (known) addMacros(result, known); else result.missing.push('Fora de casa');
+        return result;
+    }
+    return nutrition(meal.portions[person] || [], foods);
+}
+export function sumNutrition(values: (Nutrition | null)[]): Nutrition {
+    const total = emptyNutrition();
+    for (const v of values) { if (!v) continue; addMacros(total, v); v.missing.forEach(m => { if (!total.missing.includes(m)) total.missing.push(m); }); total.estimated ||= v.estimated; }
+    return total;
+}
+export function totals(state: State, date: string, person: Person): Nutrition { return sumNutrition(state.meals.filter(m => m.date === date).map(m => mealNutrition(m, person, state.foods))); }
+/** Quantidade total a preparar numa refeição (soma das porções de todas as pessoas). */
+export function mealTotal(meal: Meal): Ingredient[] {
+    if (meal.outside) return [];
+    const map = new Map<string, number>();
+    Object.values(meal.portions).flatMap(x => x || []).forEach(i => map.set(i.foodId, (map.get(i.foodId) || 0) + i.quantity));
+    return [...map].map(([foodId, quantity]) => ({ foodId, quantity }));
+}
+export type WeekSummary = { total: Nutrition; days: number; plannedDays: number; average: Macros };
+export function weekSummary(state: State, week: string, person: Person): WeekSummary {
+    const days = Array.from({ length: 7 }, (_, i) => plusDay(week, i));
+    const perDay = days.map(d => totals(state, d, person));
+    const plannedDays = days.filter(d => state.meals.some(m => m.date === d && m.portions[person])).length;
+    const total = sumNutrition(perDay);
+    const average = zero();
+    for (const key of MACRO_KEYS) average[key] = plannedDays ? total[key] / plannedDays : 0;
+    return { total, days: 7, plannedDays, average };
+}
 export function scale(items: Ingredient[], factor: number) { return items.map(i => ({ ...i, quantity: Math.round(i.quantity * factor * 100) / 100 })); }
 export function uid() {
   if (crypto.randomUUID) return crypto.randomUUID();
@@ -105,24 +157,24 @@ export type ShoppingRow = {
     leftover: number;
     checked: boolean;
     changed: boolean;
-    sources: string[];
+    sources: { label: string; quantity: number }[];
 };
 export function shopping(state: State, from: string, to: string): ShoppingRow[] {
     const quantities = new Map<string, {
         quantity: number;
-        sources: Set<string>;
+        sources: Map<string, number>;
     }>();
-    const add = (items: Ingredient[], source: string) => items.forEach(i => { const row = quantities.get(i.foodId) || { quantity: 0, sources: new Set<string>() }; row.quantity += i.quantity; row.sources.add(source); quantities.set(i.foodId, row); });
+    const add = (items: Ingredient[], source: string) => items.forEach(i => { if (i.quantity <= 0) return; const row = quantities.get(i.foodId) || { quantity: 0, sources: new Map<string, number>() }; row.quantity += i.quantity; row.sources.set(source, (row.sources.get(source) || 0) + i.quantity); quantities.set(i.foodId, row); });
     state.batches.filter(b => b.date >= from && b.date <= to).forEach(b => add(b.ingredients, `${b.date} · Preparação: ${b.name}`));
     state.meals.filter(m => m.date >= from && m.date <= to && !m.outside && !m.batchId).forEach(m => add(Object.values(m.portions).flatMap(x => x || []), `${m.date} · ${m.slot}: ${m.name}`));
-    return [...quantities].map(([id, row]) => { const food = state.foods.find(f => f.id === id)!; const stock = state.pantry[id] || 0; const missing = Math.max(0, row.quantity - stock); const packages = food.pack ? Math.ceil(missing / food.pack) : null; const buy = packages === null ? missing : packages * food.pack!; const checkedAmount = state.purchased[`${from}:${to}:${id}`]; return { food, required: row.quantity, stock, missing, packages, buy, leftover: Math.max(0, buy - missing), checked: checkedAmount !== undefined && Math.abs(checkedAmount - missing) < 0.001, changed: checkedAmount !== undefined && Math.abs(checkedAmount - missing) >= 0.001, sources: [...row.sources] }; }).sort((a, b) => a.food.section.localeCompare(b.food.section, 'pt') || a.food.name.localeCompare(b.food.name, 'pt'));
+    return [...quantities].filter(([id]) => state.foods.some(f => f.id === id)).map(([id, row]) => { const food = state.foods.find(f => f.id === id)!; const stock = state.pantry[id] || 0; const missing = Math.max(0, row.quantity - stock); const packages = food.pack ? Math.ceil(missing / food.pack) : null; const buy = packages === null ? missing : packages * food.pack!; const checkedAmount = state.purchased[`${from}:${to}:${id}`]; return { food, required: row.quantity, stock, missing, packages, buy, leftover: Math.max(0, buy - missing), checked: checkedAmount !== undefined && Math.abs(checkedAmount - missing) < 0.001, changed: checkedAmount !== undefined && Math.abs(checkedAmount - missing) >= 0.001, sources: [...row.sources].map(([label, quantity]) => ({ label, quantity })) }; }).sort((a, b) => a.food.section.localeCompare(b.food.section, 'pt') || a.food.name.localeCompare(b.food.name, 'pt'));
 }
 export function suggested(state: State, slot: string, people: Person[], from: string, to: string) {
     const avoid = people.flatMap(p => state.profiles[p].avoid.toLowerCase().split(',').map(x => x.trim()).filter(Boolean));
     const preferences = people.flatMap(p => state.profiles[p].preferences.toLowerCase().split(',').map(x => x.trim()).filter(Boolean));
     return state.recipes.filter(r => !avoid.some(word => r.ingredients.some(i => state.foods.find(f => f.id === i.foodId)?.name.toLowerCase().includes(word)))).map(r => ({ recipe: r, score: (r.category === slot ? 6 : 0) + (r.favorite ? 2 : 0) + r.ingredients.filter(i => (state.pantry[i.foodId] || 0) >= i.quantity / r.servings).length + preferences.filter(w => (r.name + ' ' + r.tags.join(' ')).toLowerCase().includes(w)).length - state.meals.filter(m => m.date >= from && m.date <= to && m.recipeId === r.id).length * 2 })).sort((a, b) => b.score - a.score).slice(0, 4).map(x => x.recipe);
 }
-const f = (id: string, name: string, kcal: number, protein: number, carbs: number, fat: number, section: string, state = 'cru', unit: Food['unit'] = 'g', basis = 100): Food => ({ id, name, unit, basis, state, section, nutrition: { kcal, protein, carbs, fat }, source: 'Exemplo genérico estimado; confirmar no rótulo do produto.' });
+const f = (id: string, name: string, kcal: number, protein: number, carbs: number, fat: number, section: string, state = 'cru', unit: Food['unit'] = 'g', basis = 100): Food => ({ id, name, unit, basis, state, section, nutrition: { kcal, protein, carbs, fat }, estimated: true, source: 'Exemplo genérico estimado; confirmar no rótulo do produto.' });
 export const seedFoods: Food[] = [
     f('rice', 'Arroz agulha', 360, 7, 79, 1, 'Mercearia'), f('pasta', 'Massa integral', 350, 13, 65, 2.5, 'Mercearia'), f('chicken', 'Peito de frango', 110, 23, 0, 1.8, 'Carne e peixe', 'cru, sem osso'), f('turkey', 'Peru picado', 120, 22, 0, 3.5, 'Carne e peixe', 'cru, sem osso'), f('salmon', 'Salmão', 208, 20, 0, 13, 'Carne e peixe', 'cru, sem espinhas'), f('tuna', 'Atum ao natural', 110, 25, 0, 1, 'Conservas', 'escorrido'), f('oats', 'Flocos de aveia', 370, 13, 60, 7, 'Mercearia', 'seco'), f('yogurt', 'Iogurte natural', 63, 4, 5, 3, 'Laticínios', 'tal como vendido'), f('skyr', 'Skyr natural', 62, 11, 4, 0.2, 'Laticínios', 'tal como vendido'), f('milk', 'Leite meio-gordo', 47, 3.4, 4.8, 1.6, 'Laticínios', 'tal como vendido', 'ml'), f('banana', 'Banana', 89, 1.1, 23, 0.3, 'Fruta e legumes', 'parte comestível'), f('apple', 'Maçã', 52, 0.3, 14, 0.2, 'Fruta e legumes', 'parte comestível'), f('berries', 'Frutos vermelhos', 45, 1, 9, 0.5, 'Fruta e legumes', 'parte comestível'), f('broccoli', 'Brócolos', 34, 2.8, 4, 0.4, 'Fruta e legumes', 'parte comestível'), f('tomato', 'Tomate', 18, 0.9, 3, 0.2, 'Fruta e legumes', 'parte comestível'), f('lettuce', 'Alface', 15, 1.4, 1.5, 0.2, 'Fruta e legumes', 'parte comestível'), f('potato', 'Batata-doce', 86, 1.6, 20, 0.1, 'Fruta e legumes', 'crua, descascada'), f('oil', 'Azeite', 884, 0, 0, 100, 'Mercearia', 'tal como vendido'), f('bread', 'Pão integral', 250, 9, 43, 4, 'Padaria', 'tal como vendido'), f('egg', 'Ovo médio', 72, 6.3, 0.4, 4.8, 'Ovos', '1 ovo médio, parte comestível', 'un', 1), f('nuts', 'Nozes', 654, 15, 7, 65, 'Mercearia', 'miolo'), f('peanut', 'Manteiga de amendoim', 600, 26, 14, 50, 'Mercearia', 'tal como vendido'), f('wrap', 'Tortilha integral', 310, 9, 50, 8, 'Mercearia', 'tal como vendido'), f('passata', 'Polpa de tomate', 30, 1.5, 4.5, 0.3, 'Conservas', 'tal como vendido'), f('whey', 'Proteína whey', 390, 78, 7, 6, 'Mercearia', 'pó')
 ];
@@ -164,11 +216,11 @@ export function validateState(state: State) {
     if (ids.size !== state.foods.length)
         throw new Error('Alimentos duplicados');
     const validItems = (items: Ingredient[]) => items.every(i => ids.has(i.foodId) && nonnegative(i.quantity)) && new Set(items.map(i => i.foodId)).size === items.length;
-    if (state.foods.some(f => !f.name.trim() || !Number.isFinite(f.basis) || f.basis <= 0 || !Object.values(f.nutrition).every(nonnegative) || (f.pack !== undefined && (!Number.isFinite(f.pack) || f.pack <= 0))))
+    if (state.foods.some(f => !f.name.trim() || !Number.isFinite(f.basis) || f.basis <= 0 || (f.nutrition !== null && !Object.values(f.nutrition).every(nonnegative)) || (f.pack !== undefined && (!Number.isFinite(f.pack) || f.pack <= 0))))
         throw new Error('Valores dos alimentos inválidos');
     if (state.recipes.some(r => !r.name.trim() || r.servings <= 0 || !validItems(r.ingredients)))
         throw new Error('Receita inválida');
-    if (state.meals.some(m => !Object.values(m.portions).every(x => validItems(x || [])) || (m.batchId && !state.batches.some(b => b.id === m.batchId))))
+    if (state.meals.some(m => !PEOPLE.some(p => m.portions[p]) || Object.values(m.outsideMacros || {}).some(v => v && !Object.values(v).every(nonnegative)) || !Object.values(m.portions).every(x => validItems(x || [])) || (m.batchId && !state.batches.some(b => b.id === m.batchId))))
         throw new Error('Refeição inválida');
     if (state.batches.some(b => !validItems(b.ingredients) || batchRemaining(state, b).some(i => i.quantity < -.001)))
         throw new Error('As porções excedem a quantidade preparada');
@@ -180,4 +232,54 @@ export function validateState(state: State) {
     if (!Object.values(state.pantry).every(nonnegative) || !Object.values(state.purchased).every(nonnegative) || PEOPLE.some(p => !Object.values(state.profiles[p].goals).every(nonnegative)))
         throw new Error('Quantidades inválidas');
     return state;
+}
+
+/** Quantidades preparadas, reservadas em refeições e ainda disponíveis numa preparação. */
+export function batchUsage(state: State, batch: Batch) {
+    const remaining = batchRemaining(state, batch);
+    return batch.ingredients.map((i, index) => ({ foodId: i.foodId, prepared: i.quantity, reserved: i.quantity - remaining[index].quantity, available: remaining[index].quantity }));
+}
+/** Quantas porções-base da receita ainda estão disponíveis (limitado pelo ingrediente mais escasso). */
+export function batchServingsLeft(state: State, batch: Batch): number | null {
+    if (!batch.servings) return null;
+    const usage = batchUsage(state, batch).filter(u => u.prepared > 0);
+    if (!usage.length) return 0;
+    return Math.max(0, Math.min(...usage.map(u => u.available / u.prepared)) * batch.servings);
+}
+/**
+ * Proposta de receita a partir de ingredientes escolhidos, criada por REGRAS predefinidas
+ * (não por IA). Quantidades indicativas por pessoa, para o utilizador rever antes de guardar.
+ */
+export function proposeRecipe(foods: Food[], foodIds: string[], category: string): Recipe {
+    const chosen = foodIds.map(id => foods.find(f => f.id === id)).filter((f): f is Food => !!f);
+    const breakfast = /Pequeno|Lanche|Ceia/.test(category);
+    const quantity = (food: Food) => {
+        const n = food.nutrition;
+        if (food.unit === 'un') return /ovo/i.test(food.name) ? 2 : 1;
+        if (food.unit === 'ml') return breakfast ? 250 : 100;
+        if (n && n.fat >= 80) return breakfast ? 5 : 8;
+        if (n && n.fat >= 40) return 15;
+        if (n && n.protein >= 60) return 30;
+        if (food.section === 'Carne e peixe') return breakfast ? 80 : 150;
+        if (food.section === 'Conservas') return n && n.protein >= 15 ? 80 : 120;
+        if (food.section === 'Laticínios') return 170;
+        if (food.section === 'Padaria') return 60;
+        if (n && n.carbs >= 50) return breakfast ? 40 : 75;
+        if (food.section === 'Fruta e legumes') return breakfast ? 120 : 150;
+        return 100;
+    };
+    const raw = chosen.filter(f => /cru|seco/i.test(f.state));
+    const steps = [
+        `Pesar os ingredientes de cada pessoa${chosen.length ? ` (${chosen.map(f => f.name.toLowerCase()).join(', ')})` : ''}.`,
+        raw.length ? `Confecionar por completo os ingredientes crus ou secos (${raw.map(f => f.name.toLowerCase()).join(', ')}), seguindo as indicações da embalagem.` : 'Lavar e preparar os ingredientes que não precisam de confeção.',
+        'Juntar tudo no prato ou na taça e servir.',
+    ].map((t, i) => `${i + 1}. ${t}`).join('\n');
+    return {
+        id: uid(),
+        name: chosen.length ? chosen.slice(0, 3).map(f => f.name).join(', ').replace(/, ([^,]*)$/, ' e $1') : 'Nova receita',
+        category, servings: 1,
+        ingredients: chosen.map(f => ({ foodId: f.id, quantity: quantity(f) })),
+        steps, minutes: raw.length ? 25 : 10, favorite: false, example: false,
+        tags: ['Proposta por regras'],
+    };
 }

@@ -1,5 +1,5 @@
-import { initialState, exampleWeek, monday, localDate, validateState, type State } from './model';
-import { stateSchema } from './validation';
+import { initialState, exampleWeek, monday, localDate, validateState, type State } from './model.ts';
+import { stateSchema } from './validation.ts';
 export type Snapshot = { state: State; revision: number; updatedAt: string; cached?: boolean };
 export interface PlanStore {
   mode: 'firebase' | 'demo';
