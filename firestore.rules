@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isMember(householdId) {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/access/$(request.auth.uid))
+        && get(/databases/$(database)/documents/access/$(request.auth.uid)).data.householdId == householdId;
+    }
+    function validState() {
+      return request.resource.data.keys().hasAll(['payload', 'revision', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['payload', 'revision', 'updatedAt'])
+        && request.resource.data.payload is string
+        && request.resource.data.payload.size() > 0
+        && request.resource.data.payload.size() <= 800000
+        && request.resource.data.revision is int
+        && request.resource.data.updatedAt == request.time;
+    }
+    // Created only by the owner in the Firebase Console (or Admin SDK).
+    // An authenticated account cannot grant access to itself or someone else.
+    match /access/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow list, create, update, delete: if false;
+    }
+    match /households/{householdId}/state/main {
+      allow get: if isMember(householdId);
+      allow create: if isMember(householdId) && validState() && request.resource.data.revision == 1;
+      allow update: if isMember(householdId) && validState()
+        && request.resource.data.revision == resource.data.revision + 1;
+      allow list, delete: if false;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

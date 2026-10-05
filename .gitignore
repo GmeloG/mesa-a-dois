@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env*
+!.env.example
+*.log
+*.tsbuildinfo
+.DS_Store
+*.pem
+.firebase/
+.sites-runtime/
+.wrangler/

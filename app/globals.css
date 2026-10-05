@@ -1,0 +1,758 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+/*! Shared component state variants.
+MIT License
+
+Copyright (c) 2023 shadcn
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+@theme inline {
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(
+        --radix-accordion-content-height,
+        var(--accordion-panel-height, auto)
+      );
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(
+        --radix-accordion-content-height,
+        var(--accordion-panel-height, auto)
+      );
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/* Custom variants */
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-closed {
+  &:where([data-state="closed"]),
+  &:where([data-closed]:not([data-closed="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-checked {
+  &:where([data-state="checked"]),
+  &:where([data-checked]:not([data-checked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-unchecked {
+  &:where([data-state="unchecked"]),
+  &:where([data-unchecked]:not([data-unchecked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-selected {
+  &:where([data-selected="true"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-disabled {
+  &:where([data-disabled="true"]),
+  &:where([data-disabled]:not([data-disabled="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-active {
+  &:where([data-state="active"]),
+  &:where([data-active]:not([data-active="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-horizontal {
+  &:where([data-orientation="horizontal"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-vertical {
+  &:where([data-orientation="vertical"]) {
+    @slot;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* scroll-fade */
+@property --scroll-fade-t {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-b {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-s {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-e {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --scroll-fade-mask {
+  syntax: "*";
+  inherits: false;
+}
+
+@theme inline {
+  @keyframes scroll-fade-reveal-t {
+    from {
+      --scroll-fade-t: 0px;
+    }
+    to {
+      --scroll-fade-t: var(--_scroll-fade-size-t, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+    }
+  }
+  @keyframes scroll-fade-reveal-b {
+    from {
+      --scroll-fade-b: var(--_scroll-fade-size-b, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+    }
+    to {
+      --scroll-fade-b: 0px;
+    }
+  }
+  @keyframes scroll-fade-reveal-s {
+    from {
+      --scroll-fade-s: 0px;
+    }
+    to {
+      --scroll-fade-s: var(--_scroll-fade-size-s, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+    }
+  }
+  @keyframes scroll-fade-reveal-e {
+    from {
+      --scroll-fade-e: var(--_scroll-fade-size-e, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+    }
+    to {
+      --scroll-fade-e: 0px;
+    }
+  }
+}
+
+@utility scroll-fade {
+  --_scroll-fade-size-t: var(
+    --scroll-fade-t-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --_scroll-fade-size-b: var(
+    --scroll-fade-b-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-block: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--scroll-fade-t, 0px),
+    #000 calc(100% - var(--scroll-fade-b, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      scroll-fade-reveal-t 1ms ease-in-out,
+      scroll-fade-reveal-b 1ms ease-in-out;
+    animation-timeline: scroll(self y), scroll(self y);
+    animation-range:
+      0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),
+      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-t: var(--_scroll-fade-size-t);
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+@utility scroll-fade-y {
+  --_scroll-fade-size-t: var(
+    --scroll-fade-t-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --_scroll-fade-size-b: var(
+    --scroll-fade-b-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-block: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--scroll-fade-t, 0px),
+    #000 calc(100% - var(--scroll-fade-b, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      scroll-fade-reveal-t 1ms ease-in-out,
+      scroll-fade-reveal-b 1ms ease-in-out;
+    animation-timeline: scroll(self y), scroll(self y);
+    animation-range:
+      0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),
+      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-t: var(--_scroll-fade-size-t);
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+@utility scroll-fade-x {
+  --_scroll-fade-size-s: var(
+    --scroll-fade-s-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --_scroll-fade-size-e: var(
+    --scroll-fade-e-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-inline: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--scroll-fade-s, 0px),
+    #000 calc(100% - var(--scroll-fade-e, 0px)),
+    transparent 100%
+  );
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    --scroll-fade-inline: linear-gradient(
+      to left,
+      transparent 0,
+      #000 var(--scroll-fade-s, 0px),
+      #000 calc(100% - var(--scroll-fade-e, 0px)),
+      transparent 100%
+    );
+  }
+  -webkit-mask-image: var(--scroll-fade-mask, var(--scroll-fade-inline));
+  mask-image: var(--scroll-fade-mask, var(--scroll-fade-inline));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      scroll-fade-reveal-s 1ms ease-in-out,
+      scroll-fade-reveal-e 1ms ease-in-out;
+    animation-timeline: scroll(self inline), scroll(self inline);
+    animation-range:
+      0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),
+      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-s: var(--_scroll-fade-size-s);
+    --scroll-fade-e: var(--_scroll-fade-size-e);
+  }
+}
+
+@utility scroll-fade-t {
+  --_scroll-fade-size-t: var(
+    --scroll-fade-t-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--scroll-fade-t, 0px),
+    #000 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-t 1ms ease-in-out;
+    animation-timeline: scroll(self y);
+    animation-range: 0 var(--scroll-fade-reveal, calc(var(--spacing) * 24));
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-t: var(--_scroll-fade-size-t);
+  }
+}
+
+@utility scroll-fade-b {
+  --_scroll-fade-size-b: var(
+    --scroll-fade-b-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - var(--scroll-fade-b, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-b 1ms ease-in-out;
+    animation-timeline: scroll(self y);
+    animation-range: calc(
+        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+      )
+      100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+@utility scroll-fade-l {
+  --_scroll-fade-size-s: var(
+    --scroll-fade-s-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--scroll-fade-s, 0px),
+    #000 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-s 1ms ease-in-out;
+    animation-timeline: scroll(self x);
+    animation-range: 0 var(--scroll-fade-reveal, calc(var(--spacing) * 24));
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-s: var(--_scroll-fade-size-s);
+  }
+}
+
+@utility scroll-fade-r {
+  --_scroll-fade-size-e: var(
+    --scroll-fade-e-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    #000 0,
+    #000 calc(100% - var(--scroll-fade-e, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-e 1ms ease-in-out;
+    animation-timeline: scroll(self x);
+    animation-range: calc(
+        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+      )
+      100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-e: var(--_scroll-fade-size-e);
+  }
+}
+
+@utility scroll-fade-s {
+  --_scroll-fade-size-s: var(
+    --scroll-fade-s-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--scroll-fade-s, 0px),
+    #000 100%
+  );
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    --scroll-fade-mask: linear-gradient(
+      to left,
+      transparent 0,
+      #000 var(--scroll-fade-s, 0px),
+      #000 100%
+    );
+  }
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-s 1ms ease-in-out;
+    animation-timeline: scroll(self inline);
+    animation-range: 0 var(--scroll-fade-reveal, calc(var(--spacing) * 24));
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-s: var(--_scroll-fade-size-s);
+  }
+}
+
+@utility scroll-fade-e {
+  --_scroll-fade-size-e: var(
+    --scroll-fade-e-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to right,
+    #000 0,
+    #000 calc(100% - var(--scroll-fade-e, 0px)),
+    transparent 100%
+  );
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    --scroll-fade-mask: linear-gradient(
+      to left,
+      #000 0,
+      #000 calc(100% - var(--scroll-fade-e, 0px)),
+      transparent 100%
+    );
+  }
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-e 1ms ease-in-out;
+    animation-timeline: scroll(self inline);
+    animation-range: calc(
+        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+      )
+      100%;
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-e: var(--_scroll-fade-size-e);
+  }
+}
+
+@utility scroll-fade-* {
+  --scroll-fade-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-t-* {
+  --scroll-fade-t-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-t-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-b-* {
+  --scroll-fade-b-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-b-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-s-* {
+  --scroll-fade-s-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-s-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-e-* {
+  --scroll-fade-e-size: calc(var(--spacing) * --value(integer));
+  --scroll-fade-e-size: --value([length], [percentage]);
+}
+
+@utility scroll-fade-none {
+  --scroll-fade-mask: none;
+}
+
+/* shimmer */
+@property --shimmer-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 20deg;
+}
+@property --shimmer-image {
+  syntax: "*";
+  inherits: false;
+}
+@property --shimmer-text-fill {
+  syntax: "*";
+  inherits: false;
+}
+
+@theme inline {
+  @keyframes tw-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+}
+
+@utility shimmer {
+  --_spread: var(--shimmer-spread, calc(3ch + 40px));
+  --_base: currentColor;
+  --_highlight: var(
+    --shimmer-color,
+    oklch(from currentColor l c h / calc(alpha* 0.2))
+  );
+
+  background-image: var(
+    --shimmer-image,
+    linear-gradient(
+      calc(90deg + var(--shimmer-angle)),
+      var(--_base) calc(50% - var(--_spread)),
+      color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+        calc(50% - var(--_spread) * 0.5),
+      var(--_highlight) 50%,
+      color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+        calc(50% + var(--_spread) * 0.5),
+      var(--_base) calc(50% + var(--_spread))
+    )
+  );
+  background-repeat: no-repeat;
+  background-size: calc(200% + var(--_spread) * 2) 100%;
+  background-position: 0 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--shimmer-text-fill, transparent);
+  animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+
+  @variant dark {
+    --_highlight: var(
+      --shimmer-color,
+      oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4))
+    );
+  }
+
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    animation-direction: reverse;
+  }
+}
+
+@utility shimmer-once {
+  animation-iteration-count: 1;
+}
+
+@utility shimmer-reverse {
+  animation-direction: reverse;
+}
+
+@utility shimmer-none {
+  --shimmer-image: none;
+  --shimmer-text-fill: currentColor;
+}
+
+@utility shimmer-color-* {
+  --shimmer-color: --value(--color, [color]);
+  --shimmer-color: color-mix(
+    in oklch,
+    --value(--color, [color]) calc(--modifier(integer) * 1%),
+    transparent
+  );
+}
+
+@utility shimmer-duration-* {
+  --shimmer-duration: calc(--value(integer) * 1ms);
+}
+
+@utility shimmer-spread-* {
+  --shimmer-spread: calc(var(--spacing) * --value(integer));
+  --shimmer-spread: --value([length], [percentage]);
+}
+
+@utility shimmer-angle-* {
+  --shimmer-angle: calc(--value(integer) * 1deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+:root {
+  --background: #f5f7fa;
+  --foreground: #15252c;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #087e70;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: #e7000b;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #087e70;
+  --chart-1: #f54900;
+  --chart-2: #009689;
+  --chart-3: #104e64;
+  --chart-4: #ffb900;
+  --chart-5: #fe9a00;
+  --radius: 0.625rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #171717;
+  --sidebar-primary: #087e70;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #e5f4ef;
+  --sidebar-accent-foreground: #171717;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #a1a1a1;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+*{box-sizing:border-box}body{margin:0;background:var(--background);color:var(--foreground);font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5}button,a,input,textarea{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}input,textarea{font-size:16px!important}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #39a998;outline-offset:4px}h1,h2,h3,p{margin:0}h1{font-size:32px;line-height:1.2;letter-spacing:-1px;font-weight:700}h2{font-size:19px;font-weight:700;letter-spacing:-.3px}h3{font-size:18px;font-weight:700}small{font-size:13px}svg{flex-shrink:0}input[type=number]{appearance:textfield}input::-webkit-inner-spin-button{appearance:none}.app-sidebar{--sidebar-width:238px}.brand{padding:32px 25px!important;display:flex;flex-direction:row;gap:11px;align-items:center;font-size:21px;font-weight:700;letter-spacing:-.7px}.brand img{width:38px;height:38px}.brand small{display:block;color:#78818a;font-size:13px;letter-spacing:0;font-weight:400;margin-top:2px}.nav-area{padding:26px 18px}.nav-caption{color:#8a9298;font-size:12px;font-weight:700;letter-spacing:1.4px;padding:0 14px;margin-bottom:16px}.nav-item{height:48px!important;padding:0 15px!important;font-size:15px!important;margin-bottom:6px;color:#56656c;gap:12px!important}.nav-item[data-active=true]{color:#087e70;background:#e5f4ef;font-weight:700}.nav-count{margin-left:auto;font-size:12px;padding:1px 7px;background:#e5f4ef;border-radius:6px;color:#087e70}.sidebar-bottom{padding:20px!important;gap:20px!important}.household{display:flex;gap:12px;align-items:center;font-size:14px;font-weight:700}.household small{display:block;font-weight:400;color:#78818a;font-size:12px;margin-top:3px}.avatar-pair{display:flex}.avatar-pair span{display:grid;place-items:center;border:2px solid white;width:32px;height:32px;border-radius:50%;background:#d9ede8;color:#146c60;font-size:12px}.avatar-pair span+span{margin-left:-8px;background:#f8e4cf;color:#9b611d}.workspace{flex:1;min-width:0}.topbar{height:76px;padding:0 38px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e4e9ed;background:#ffffffb8;gap:16px}.breadcrumb{display:flex;align-items:center;gap:15px;font-size:14px}.breadcrumb>span{color:#859098}.breadcrumb strong{font-weight:500}.sync-status{display:flex;align-items:center;gap:8px;font-size:12px;color:#68767b}.sync-status>svg{color:#087e70}.content{max-width:1500px;margin:0 auto;padding:36px 38px 50px}.page-heading{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:30px}.eyebrow{font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:#697c80;font-weight:700;margin-bottom:10px}.subtitle{color:#718087;font-size:15px;margin-top:10px}.primary{background:#087e70!important;color:white!important;border:1px solid #087e70;height:43px;padding:0 18px;font-size:14px;font-weight:600;border-radius:8px;box-shadow:0 3px 5px #087e7010}.primary:hover{background:#066b60!important}.week-toolbar{display:flex;justify-content:space-between;gap:16px;margin-bottom:19px;align-items:center}.week-select{display:flex;align-items:center;gap:7px}.week-select strong{font-size:15px}.back-today{margin-left:8px;background:#fff}.day-rail{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-bottom:29px}.day-button{border:1px solid #e1e7ea;background:#fff;border-radius:11px;padding:13px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;color:#61717a;transition:background .15s}.day-button>span{text-transform:capitalize;font-size:13px}.day-button strong{font-size:24px;font-weight:600;color:#22373d}.day-button small{font-size:11px;color:#8a969c}.day-button.selected{background:#087e70;border-color:#087e70;color:white;box-shadow:0 5px 14px #087e7020}.day-button.selected strong,.day-button.selected small{color:white}.day-button.selected small{opacity:.75}.nutrition-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:24px 0 15px}.nutrition-heading h2>span{color:#829096;font-weight:400;font-size:14px}.person-tabs{background:#e9eef0;padding:4px;height:40px}.person-tabs [data-state=active]{background:white;box-shadow:0 1px 4px #15252c0c}.tiny-avatar{width:21px;height:21px;border-radius:50%;background:#def0e8;color:#087e70;display:grid;place-items:center;font-size:11px;margin-right:3px}.tiny-avatar.ines{background:#fae7d6;color:#9b6127}.macro-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.macro-card{border:1px solid #e1e7ea;background:white;padding:19px 20px 17px;border-radius:11px}.macro-label{display:flex;align-items:center;justify-content:space-between;color:#6c7d83;font-size:13px;gap:4px}.macro-label>svg{color:#db8b46}.macro-symbol{font-size:11px;font-weight:700;background:#e4f0eb;color:#087e70;padding:2px 5px;border-radius:5px}.macro-value{display:flex;align-items:baseline;gap:7px;font-size:32px;font-weight:600;line-height:1.2;margin:12px 0 14px;letter-spacing:-.9px;font-variant-numeric:tabular-nums}.macro-value small{color:#809097;font-size:14px;font-weight:400;letter-spacing:0}.macro-card [data-slot=progress]{height:5px;background:#eef2f3;margin-bottom:10px}.macro-kcal [data-slot=progress-indicator]{background:#dba458}.macro-protein [data-slot=progress-indicator]{background:#0b8a78}.macro-carbs [data-slot=progress-indicator]{background:#5a85b0}.macro-fat [data-slot=progress-indicator]{background:#a681ba}.macro-card>small{font-size:12px;color:#78878d}.nutrition-note{font-size:12px;color:#7c898f;margin:10px 0 28px}.text-link{color:#087e70;font-size:13px;text-align:left}.text-link:hover{text-decoration:underline}.today-grid{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:26px}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.section-heading>span{font-size:12px;color:#7b8b91}.slot-label{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin:19px 0 10px;color:#52676f}.slot-number{font-size:10px;color:#8a9a9e;font-weight:500}.slot-time{margin-left:auto;font-size:12px;font-weight:400;color:#8a979e}.meal-card{background:white;border:1px solid #e0e7e9;border-radius:11px;margin-bottom:9px;padding:17px;position:relative}.meal-card-main{display:flex;gap:14px}.meal-marker{height:42px;width:42px;background:#e8f3ee;border-radius:10px;display:grid;place-items:center;color:#087e70;flex-shrink:0}.meal-marker.outside{background:#fff0df;color:#a76a26}.meal-card-text{flex:1;min-width:0}.meal-title{text-align:left;font-size:16px;font-weight:600;line-height:1.4;padding-right:25px}.meal-title:hover{color:#087e70}.meal-people{display:flex;gap:5px;margin:7px 0;flex-wrap:wrap}.meal-people span{font-size:10px;border-radius:4px;padding:2px 6px;background:#f2f5f5;color:#64747a}.meal-people .goncalo{color:#137b6b;background:#e9f4ee}.meal-people .ines{color:#a67036;background:#faf0e5}.ingredient-summary{font-size:12px;color:#76888e;line-height:1.6;margin:8px 0 10px}.macro-line{display:flex;align-items:center;flex-wrap:wrap;gap:11px;font-size:11px;color:#738087}.macro-line>strong{font-size:14px;color:#233c42;font-weight:600}.macro-line>strong small{font-size:11px;font-weight:400;color:#74848a}.macro-line b{font-weight:500}.macro-line .protein{color:#107f70}.macro-line .carbs{color:#537ea8}.macro-line .fat{color:#9773a6}.meal-actions{display:flex;justify-content:flex-end;gap:0;margin:7px -5px -9px}.meal-actions button{height:30px;width:32px;color:#7b8a90}.add-slot{height:48px;border:1px dashed #cdd9dc;border-radius:9px;width:100%;display:flex;justify-content:center;align-items:center;gap:7px;font-size:13px;color:#7c8d93;background:#ffffff50}.add-slot:hover{background:#e8f3ef;color:#087e70}.slot-extra{font-size:11px;margin:0 0 5px 3px;color:#839496}.right-column{padding-top:0;display:flex;flex-direction:column;gap:22px}.inspiration{height:235px;border-radius:13px;overflow:hidden;position:relative;background:#163d32}.inspiration img{width:100%;height:100%;object-fit:cover;object-position:center 72%}.inspiration:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 10%,#132c2299)}.inspiration-caption{position:absolute;bottom:20px;left:20px;right:20px;color:#fff;z-index:1}.inspiration-caption span{font-size:10px;letter-spacing:1px}.inspiration-caption h3{font-size:23px;line-height:1.3;margin-top:7px;font-weight:500;letter-spacing:-.6px}.suggestions{background:#fff;border:1px solid #e1e7ea;border-radius:11px;padding:20px}.suggestions h2{font-size:16px}.suggestions .section-heading{margin-bottom:8px}.suggestions .section-heading svg{color:#087e70}.note{font-size:13px;color:#718289;line-height:1.6}.suggestion{display:flex;align-items:center;justify-content:space-between;text-align:left;width:100%;gap:12px;padding:16px 0;border-bottom:1px solid #edf1f2}.suggestion:last-child{border-bottom:0;padding-bottom:0}.suggestion strong{font-size:14px;font-weight:600;display:block;line-height:1.5}.suggestion small{font-size:11px;color:#859298;display:block;margin-top:4px}.suggestion>svg{color:#087e70}.shopping-summary{background:#e4f2ed;border:1px solid #d3e8e0;border-radius:11px;padding:18px;display:flex;align-items:center;text-align:left;gap:12px;color:#166b5f}.shopping-icon{padding:8px;border-radius:9px;background:#fff8}.shopping-summary h3{font-size:15px}.shopping-summary p{font-size:12px;margin-top:3px}.shopping-summary>svg{margin-left:auto}.empty-plan{border:1px solid #dde7e8;border-radius:13px;text-align:center;padding:30px 20px;margin:12px 0 25px;background:#fff}.empty-plan>svg{margin:0 auto 12px;color:#087e70;width:30px;height:30px}.empty-plan p{font-size:14px;color:#718289;margin:8px auto 18px;max-width:420px}.empty-plan small{display:block;font-size:11px;color:#8a979e;margin-top:16px}.button-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.weekly-grid{display:grid;grid-template-columns:repeat(7,minmax(140px,1fr));overflow-x:auto;border:1px solid #dfe6e9;border-radius:12px;background:white}.week-day{border-right:1px solid #e5ebed;min-width:0}.week-day:last-child{border:0}.week-day-title{padding:16px;text-align:left;width:100%;background:#eff4f4;border-bottom:1px solid #e5ebed;text-transform:capitalize;display:flex;flex-direction:column;gap:5px}.week-day-title strong{font-size:13px}.week-day-title span{font-size:12px;color:#859096}.week-day.active .week-day-title{background:#def0e8;color:#087e70}.weekly-slot{padding:12px 9px;border-bottom:1px solid #eaf0f2;min-height:160px}.weekly-slot>small{font-size:11px;color:#819298;display:block;margin-bottom:9px}.weekly-meal{background:#f3f7f5;border-radius:7px;padding:10px;width:100%;text-align:left;margin-bottom:7px}.weekly-meal strong{display:block;font-size:12px;line-height:1.5}.weekly-meal span{display:block;font-size:10px;margin-top:7px;color:#548679}.weekly-meal small{display:block;font-size:10px;color:#80918f;margin-top:4px}.week-add{width:100%;display:flex;justify-content:center;border:1px dashed #d6e2df;border-radius:6px;color:#6f8d85;padding:6px}.week-total{padding:13px;font-size:15px;font-weight:700}.week-total small{display:block;color:#859298;font-size:11px;font-weight:400}.recipe-toolbar{display:flex;justify-content:space-between;gap:20px;align-items:center;margin:30px 0 20px}.search-box{position:relative;min-width:220px}.search-box>svg{position:absolute;top:11px;left:12px;color:#92a1a5}.search-box input{padding-left:38px;background:white;height:41px}.filter-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;gap:20px}.filter-row .field{width:230px}.recipe-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.recipe-card{background:white;border:1px solid #e1e8e9;padding:21px;border-radius:12px;display:flex;flex-direction:column;min-width:0}.recipe-card-top{display:flex;align-items:center;justify-content:space-between;gap:4px}.recipe-card-top button{color:#087e70}.recipe-category{color:#087e70;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px}.recipe-card h3{font-size:20px;line-height:1.4;margin:8px 0 12px;min-height:55px}.recipe-meta{display:flex;flex-wrap:wrap;gap:12px;color:#7b8c91;font-size:11px;margin-bottom:16px}.recipe-meta span{display:flex;align-items:center;gap:4px}.recipe-card .macro-line{border-top:1px solid #edf1f2;padding-top:14px}.recipe-tags{display:flex;flex-wrap:wrap;gap:6px;margin:15px 0}.recipe-tags>span{padding:4px 8px;background:#f1f5f4;border-radius:5px;color:#718780;font-size:11px}.recipe-actions{display:flex;gap:8px;margin-top:auto;padding-top:18px}.recipe-actions>button:first-child{flex:1}details{font-size:13px;color:#647880;line-height:1.7}summary{cursor:pointer;font-size:12px;color:#087e70;padding:5px 0}details ul{padding-left:18px;margin:10px 0}details p{margin:10px 0;white-space:pre-line}details small{font-size:11px}.recipe-build{display:flex;gap:18px;align-items:center;background:#e8f3ef;border-radius:13px;padding:25px;margin-top:25px}.recipe-build>svg{color:#087e70}.recipe-build h3{font-size:17px}.recipe-build p{font-size:13px;margin-top:5px;color:#608174}.recipe-build button{flex-shrink:0;background:white}.food-list{background:white;border:1px solid #e0e8e9;border-radius:12px;overflow:hidden}.food-row{display:flex;align-items:center;gap:20px;padding:20px;width:100%;text-align:left;border-bottom:1px solid #e8edef}.food-row:last-child{border:0}.food-row>div:first-child{flex:1}.food-row strong{font-size:15px}.food-row small{display:block;font-size:11px;color:#84969b;margin-top:3px}.food-row>svg{color:#7b928c}.batch-card{background:white;padding:25px;border:1px solid #dfe7e9;border-radius:12px;margin:15px 0}.batch-card p{font-size:13px;color:#7a8b92;margin-top:5px}.shopping-toolbar{background:#fff;border:1px solid #e1e7ea;border-radius:11px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:15px}.shopping-count{display:flex;align-items:center;gap:12px;color:#087e70}.shopping-count strong{font-size:34px;line-height:1}.shopping-count span{max-width:90px;font-size:13px}.shopping-section{margin:27px 0;border:1px solid #e2e9eb;background:#fff;border-radius:12px;overflow:hidden}.shopping-section>h2{padding:16px 22px;border-bottom:1px solid #e5ecee;font-size:15px;background:#f1f6f4;display:flex;align-items:center;justify-content:space-between}.shopping-section h2>span{font-size:11px;color:#7d928c;font-weight:400}.shopping-row{padding:18px 22px;border-bottom:1px solid #edf1f2}.shopping-row:last-child{border:0}.shopping-main{display:flex;align-items:center;gap:16px}.shopping-name{flex:1}.shopping-name strong{font-size:15px}.shopping-name small{display:block;color:#809398;font-size:12px;margin-top:3px}.shopping-amount{text-align:right;min-width:95px}.shopping-amount strong{font-size:17px;color:#087e70}.shopping-amount small{display:block;color:#85969a;font-size:11px}.shopping-row>details{padding-left:32px;margin-top:7px}.shopping-row.is-checked .shopping-name strong{text-decoration:line-through;color:#9aa7ac}.stock-controls{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin:15px 0}.stock-controls .field{max-width:220px}.source-list{font-size:12px}.manual-row{display:flex;align-items:center;gap:15px;padding:16px 22px;border-bottom:1px solid #edf1f2}.manual-row strong{font-size:14px;flex:1}.manual-row span{font-size:13px;color:#819498}.crossed{text-decoration:line-through;color:#85989c}.profiles-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}.profile-card{background:white;border:1px solid #e0e7e9;padding:28px;border-radius:13px;display:flex;flex-direction:column;gap:21px}.profile-title{display:flex;align-items:center;gap:14px}.profile-title p{color:#809196;font-size:13px;margin-top:3px}.profile-avatar{width:48px;height:48px;display:grid;place-items:center;background:#e0f0e9;color:#087e70;border-radius:50%;font-size:20px}.profile-avatar.ines{background:#fae8d5;color:#996027}.settings-card{display:flex;align-items:center;gap:20px;background:white;border:1px solid #e1e9eb;border-radius:12px;padding:25px;margin:25px 0}.settings-card>div{flex:1}.settings-card h2{font-size:17px}.settings-card p{font-size:13px;color:#809296;margin-top:8px}.settings-card>button{white-space:normal}.notice{display:flex;align-items:center;gap:12px;background:#edf4f7;color:#57717d;border:1px solid #dbe6eb;border-radius:9px;padding:14px 18px;font-size:13px;margin:0 0 20px}.editor-dialog{max-width:650px!important;max-height:90dvh;overflow-y:auto;border-radius:16px;background:#fff;padding:28px!important}.form-stack{display:flex;flex-direction:column;gap:21px}.form-stack [data-slot=dialog-title]{font-size:23px;letter-spacing:-.5px;line-height:1.3;padding-right:20px}.form-stack [data-slot=dialog-description]{font-size:14px;line-height:1.6;margin-top:-10px}.field{display:flex;flex-direction:column;gap:7px;font-size:13px;color:#526a73;min-width:0}.field input,.field textarea{background:white;border-color:#d9e2e6;border-radius:7px}.field input{height:41px}.choice{width:100%;height:41px!important;background:white;overflow:hidden;font-size:14px}.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}.check-label{display:flex;gap:10px;align-items:center;font-size:14px;color:#526970}.people-check{display:flex;gap:24px}.ingredients{display:flex;flex-direction:column;gap:12px}.ingredient{display:flex;align-items:center;gap:10px;border-bottom:1px solid #e9eff1;padding:8px 0 13px}.ingredient>div{flex:1;min-width:0}.ingredient strong{font-size:14px;font-weight:500}.ingredient small{display:block;color:#819398;font-size:11px;margin-top:3px}.ingredient input{width:85px;height:39px;text-align:right;background:white}.ingredient>span{width:20px;font-size:12px;color:#8a9aa0}.ingredient button{color:#97a6ab}.form-stack>.macro-line{padding:16px;background:#f0f7f3;border-radius:8px;font-size:13px}.form-stack>.macro-line>strong{font-size:18px}.warning{font-size:12px;color:#a85e1f;display:block;margin-top:5px}.saving-label{font-size:13px;color:#087e70;text-align:center}.app-footer{padding:20px 38px 28px;font-size:12px;color:#829398;display:flex;justify-content:space-between}.app-footer span{color:#a0adb2}.mobile-nav{display:none}.welcome-loading{min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;gap:22px;flex-direction:column}.welcome-loading h1{font-size:27px}.welcome-loading p{color:#70838a;max-width:420px}.welcome-loading svg{color:#087e70}.button-link{display:inline-flex;background:#087e70;color:white;border-radius:8px;padding:12px 20px;font-size:14px}.spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media(min-width:1600px){.content{padding-top:44px}.today-grid{grid-template-columns:minmax(0,1fr) 340px}}
+@media(max-width:1200px){.today-grid{grid-template-columns:minmax(0,1fr) 270px;gap:20px}.content{padding:28px 26px 40px}.topbar{padding:0 26px}.macro-card{padding:17px 14px}.macro-label{font-size:12px}.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.right-column .inspiration{height:225px}.macro-value{font-size:29px}.app-sidebar{--sidebar-width:210px}.brand{padding:28px 20px!important;font-size:19px}.nav-area{padding:25px 12px}.nutrition-heading h2>span{display:none}.settings-card{flex-wrap:wrap}.settings-card>div{flex-basis:100%}}
+@media(max-width:1000px){.today-grid{grid-template-columns:minmax(0,1fr)}.right-column{display:grid;grid-template-columns:1fr 1fr;gap:20px}.shopping-summary{grid-column:1/-1}.right-column .inspiration{height:100%;min-height:250px}.page-heading{align-items:flex-start}.page-heading h1{font-size:27px}.page-heading .primary{font-size:12px;white-space:normal;flex-shrink:0;padding:0 12px}.profiles-grid{grid-template-columns:1fr}.macro-cards{gap:10px}.macro-label{font-size:11px}.macro-label>svg{width:15px}.macro-symbol{display:none}.sync-status{font-size:11px}.recipe-toolbar{flex-wrap:wrap}.food-row{flex-wrap:wrap}.food-row .macro-line{flex-basis:100%}.day-button small{font-size:10px}.day-button strong{font-size:22px}.recipe-build{flex-wrap:wrap}}
+@media(max-width:767px){.topbar{height:58px;padding:0 19px}.breadcrumb{font-size:13px;gap:8px}.breadcrumb>span{color:#1c4740;font-weight:700}.sync-status>span{display:none}.content{padding:24px 18px 95px}.page-heading{gap:14px;flex-wrap:wrap;margin-bottom:23px}.page-heading h1{font-size:29px;letter-spacing:-1px}.page-heading .primary{font-size:13px;height:40px;padding:0 15px}.eyebrow{font-size:10px;margin-bottom:9px}.subtitle{font-size:13px;margin-top:8px}.week-toolbar{gap:5px;flex-wrap:wrap}.week-toolbar>button{font-size:12px;height:34px}.week-select{gap:0}.week-select strong{font-size:13px}.week-select>button{width:30px;height:33px}.week-select .back-today{width:auto;font-size:12px;margin-left:3px;padding:0 8px}.day-rail{gap:5px;margin-bottom:22px}.day-button{padding:10px 1px;border-radius:9px;gap:5px}.day-button>span{font-size:10px}.day-button strong{font-size:20px}.day-button small{font-size:8px;letter-spacing:-.3px}.nutrition-heading{flex-wrap:wrap;margin-top:16px;gap:12px}.nutrition-heading h2{font-size:17px}.person-tabs{height:37px}.person-tabs button{font-size:12px;padding:0 8px}.macro-cards{grid-template-columns:1fr 1fr;gap:10px}.macro-card{padding:16px}.macro-label{font-size:12px}.macro-label>svg{width:16px}.macro-symbol{display:block}.macro-value{font-size:30px;margin:10px 0 12px}.macro-card>small{font-size:11px}.nutrition-note{font-size:10px;line-height:1.6;margin-bottom:23px}.today-grid{gap:25px}.section-heading h2{font-size:18px}.section-heading>span{font-size:11px}.meal-card{padding:14px}.meal-card-main{gap:11px}.meal-marker{width:35px;height:35px;border-radius:8px}.meal-marker>svg{width:17px}.meal-title{font-size:15px;padding:0}.ingredient-summary{font-size:11px;line-height:1.7}.macro-line{gap:9px;font-size:10px}.macro-line>strong{font-size:13px}.meal-people span{font-size:10px}.right-column{grid-template-columns:1fr}.right-column .inspiration{height:250px;min-height:0}.suggestions{padding:21px}.suggestion strong{font-size:14px}.weekly-grid{grid-template-columns:1fr;overflow:visible;border:0;background:none;gap:20px}.week-day{border:1px solid #e0e7e9;border-radius:10px;background:white;overflow:hidden}.week-day:last-child{border:1px solid #e0e7e9}.week-day-title{flex-direction:row;justify-content:space-between}.week-day-title strong{font-size:15px}.weekly-slot{min-height:0;padding:12px 15px;display:grid;grid-template-columns:105px 1fr;align-items:start;gap:8px}.weekly-slot>small{grid-column:1;grid-row:1/4;font-size:11px;padding-top:5px}.weekly-meal{grid-column:2}.weekly-meal strong{font-size:13px}.weekly-meal span,.weekly-meal small{font-size:11px}.week-add{grid-column:2}.week-total{display:flex;justify-content:space-between}.week-total small{font-size:12px}.recipe-toolbar{gap:15px}.recipe-toolbar [data-slot=tabs-list]{width:100%;height:auto;flex-wrap:wrap}.recipe-toolbar [data-slot=tabs-trigger]{font-size:12px;padding:7px 9px}.recipe-toolbar [data-slot=tabs]{width:100%}.search-box{width:100%}.filter-row{align-items:flex-start;flex-direction:column;gap:12px}.filter-row .field{width:100%}.filter-row .note{font-size:11px}.recipe-grid{grid-template-columns:1fr}.recipe-card h3{min-height:0;font-size:20px}.recipe-card .macro-line{font-size:12px;gap:12px}.recipe-card .macro-line strong{font-size:16px}.recipe-actions{margin-top:5px}.recipe-build{padding:20px;gap:14px}.recipe-build h3{font-size:16px}.recipe-build p{font-size:12px}.food-row{padding:17px;gap:12px}.food-row>div:first-child{flex-basis:80%}.food-row>.macro-line{order:3;font-size:12px}.food-row>svg{position:relative}.shopping-toolbar{padding:16px;gap:15px;flex-wrap:wrap}.shopping-toolbar>.two-cols{width:100%;gap:12px}.shopping-count{gap:10px}.shopping-count strong{font-size:27px}.shopping-count span{max-width:none;font-size:12px}.shopping-section>h2{padding:14px 16px}.shopping-row{padding:16px 14px}.shopping-main{gap:11px}.shopping-name strong{font-size:14px}.shopping-name small{font-size:11px}.shopping-amount{min-width:70px}.shopping-amount strong{font-size:15px}.shopping-amount small{font-size:10px}.shopping-row>details{padding-left:27px;font-size:12px}.shopping-row>details summary{font-size:11px}.stock-controls .field{max-width:100%;width:100%}.profile-card{padding:22px;gap:19px}.profile-card .two-cols{gap:12px}.field{font-size:13px}.notice{font-size:12px;padding:13px;line-height:1.6}.editor-dialog{padding:24px 20px!important;max-height:92dvh;max-width:calc(100% - 20px)!important}.form-stack{gap:19px}.form-stack .two-cols{gap:12px}.form-stack [data-slot=dialog-title]{font-size:22px}.form-stack [data-slot=dialog-description]{font-size:13px}.form-stack [data-slot=tabs-trigger]{font-size:12px}.ingredient input{width:72px}.ingredient strong{font-size:13px}.ingredient small{font-size:10px}.ingredient{gap:7px}.ingredient button{width:26px}.ingredient>span{width:16px}.ingredient .field{font-size:12px}.check-label{font-size:13px}.settings-card{padding:20px}.app-footer{display:none}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:40;justify-content:space-around;padding:9px 5px calc(10px + env(safe-area-inset-bottom));background:#fffffff5;border-top:1px solid #dfe7e9;backdrop-filter:blur(12px)}.mobile-nav button{display:flex;align-items:center;flex-direction:column;gap:5px;flex:1;color:#819297;padding:3px 0;min-height:45px}.mobile-nav button span{font-size:10px}.mobile-nav button.active{color:#087e70}.mobile-nav button.active svg{stroke-width:2.5}.welcome-loading h1{font-size:24px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+/* Keep supporting nutrition and shopping values readable. */
+.field,.note,.check-label{font-size:14px}.macro-line,.recipe-meta,.recipe-tags>span,.meal-people span,.ingredient-summary,.nutrition-note,.macro-card>small,.shopping-name small,.shopping-amount small,.ingredient small,.suggestion small{font-size:12px}.macro-line>strong small{font-size:12px}.slot-number{font-size:12px}.weekly-meal span,.weekly-meal small,.weekly-slot>small{font-size:12px}.recipe-category{font-size:12px}.mobile-nav button span{font-size:12px}
+@media(max-width:767px){.day-button small{display:none}.day-button>span{font-size:12px}.macro-line{gap:8px}.macro-card>small{font-size:12px}.nutrition-note{font-size:12px}.ingredient-summary{font-size:12px}.meal-card-main{gap:9px}.meal-marker{display:none}.shopping-row>details summary{font-size:12px}.form-stack .check-label{font-size:14px}}
+.login-page{min-height:100dvh;display:grid;place-items:center;padding:30px 20px;background:radial-gradient(ellipse at top right,#d7f0e6,transparent 65%),#f5f7fa}.login-card{width:100%;max-width:440px;padding:34px;background:white;border:1px solid #dfebe5;border-radius:20px;box-shadow:0 20px 80px #14372a10}.login-logo{width:54px;height:54px;margin-bottom:24px}.login-card h1{font-size:34px}.login-card .subtitle{line-height:1.7;margin-bottom:28px}.login-card .notice{margin-top:20px}.login-card .notice p{margin-top:8px}.demo-entry{margin-top:22px;padding-top:22px;border-top:1px solid #e6ece9;text-align:center}.demo-entry button{width:100%}.demo-entry small{display:block;font-size:12px;color:#70867d;line-height:1.7;margin-top:12px}.login-error{color:#a23d34;background:#fff0ee;padding:14px;border-radius:8px;font-size:14px;margin-top:15px}.demo-banner{justify-content:space-between;gap:12px}.demo-banner button{flex-shrink:0;font-size:12px}.demo-banner span{font-size:13px}@media(max-width:500px){.login-card{padding:26px}.demo-banner{align-items:flex-start;flex-direction:column}}
