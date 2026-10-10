@@ -26,6 +26,8 @@ Aplicação web para o Gonçalo e a Inês planearem as refeições da semana, ac
 - Refeições simples e lanches são tratados como receitas, com quantidades e valores próprios.
 - Receitas de exemplo editáveis, com ingredientes comuns em supermercados portugueses.
 - Proposta de receita a partir de ingredientes escolhidos, gerada por regras predefinidas (não por IA), para rever e editar antes de guardar ou planear.
+- Pesquisa de produtos no Open Food Facts por nome, marca ou código de barras (ou pela câmara, em Android), que preenche os valores nutricionais e o tamanho da embalagem.
+- Catálogo inicial com produtos comuns (arroz, massa, leite, Leite Proteína Mimosa natural e cacau, entre outros), que pode ser acrescentado a um plano já existente.
 - Alimentos com nome, marca, unidade, estado de pesagem (cru, cozinhado, escorrido, parte comestível…), base nutricional (100 g, 100 ml ou unidade), fonte dos valores, secção do supermercado e tamanho de embalagem.
 
 ## Quantidades e nutrição

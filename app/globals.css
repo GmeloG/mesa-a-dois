@@ -790,3 +790,9 @@ SOFTWARE.
 .update-banner button{background:#087e70;color:#fff;border-radius:8px;padding:6px 10px;font-weight:600}
 .error-detail{white-space:pre-wrap;font-size:12px;background:#f5f7fa;padding:10px;border-radius:8px;margin:12px 0;max-height:30vh;overflow:auto}
 @media(max-width:767px){.week-summary-grid{grid-template-columns:1fr}.people-summary{gap:8px}.person-total{padding:9px 10px}.person-total small{font-size:11px}.day-rail{overflow-x:auto}}
+.off-search{display:grid;gap:8px;padding:12px;border:1px dashed #b9d8ce;border-radius:10px;background:#f6fbf9}
+.off-row{display:flex;gap:6px;margin-top:6px}.off-row input{flex:1;min-width:0}
+.off-results{display:grid;gap:6px;max-height:40dvh;overflow:auto}
+.off-results button{width:100%;text-align:left;display:grid;gap:2px;padding:9px 11px;border:1px solid #e0e7e9;border-radius:8px;background:#fff}
+.off-results button:hover{border-color:#087e70}.off-results small{color:#5d6f75;font-size:12px}
+.off-video{width:100%;max-height:240px;border-radius:8px;background:#000;object-fit:cover}

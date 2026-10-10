@@ -10,7 +10,7 @@ import { Progress } from '@/components/ui/progress';
 import {
   type State, type Recipe, type Meal, type Person, type ShoppingRow, type Profile,
   PEOPLE, NAMES, SLOTS, MACRO_KEYS, localDate, monday, plusDay, nutrition, totals, fmt, amount, newMeal, scale, uid,
-  exampleWeek, suggested, batchUsage, batchServingsLeft, mealNutrition, mealTotal, weekSummary,
+  exampleWeek, suggested, addCatalogFoods, missingCatalogFoods, batchUsage, batchServingsLeft, mealNutrition, mealTotal, weekSummary,
 } from '@/lib/model';
 import { Choice, NumberField, MacroLine, ingredientText } from './controls';
 import type { Commit } from './editors';
@@ -223,7 +223,7 @@ export function RecipesView({ ctx }: { ctx: Ctx }) {
       </article>)}</div>
     </>}
     {tab === 'foods' && <>
-      <div className="section-heading"><p className="notice">Os valores iniciais são estimativas genéricas («≈»). Substitui-os pelos rótulos dos teus produtos. Pesos crus e cozinhados são alimentos distintos.</p><Button className="primary" onClick={() => setModal({ type: 'food' })} disabled={offline}><Plus size={17} />Novo alimento</Button></div>
+      <div className="section-heading"><p className="notice">Os valores iniciais são estimativas genéricas («≈»). Substitui-os pelos rótulos dos teus produtos. Pesos crus e cozinhados são alimentos distintos.</p><div className="button-row"><Button className="primary" onClick={() => setModal({ type: 'food' })} disabled={offline}><Plus size={17} />Novo alimento</Button>{missingCatalogFoods(state) > 0 && <Button variant="outline" disabled={offline} onClick={() => commit(s => addCatalogFoods(s).state, `${missingCatalogFoods(state)} alimentos do catálogo adicionados`)}>Adicionar catálogo ({missingCatalogFoods(state)} novos)</Button>}</div></div>
       <div className="food-list">{state.foods.filter(f => `${f.name} ${f.brand || ''}`.toLowerCase().includes(q)).sort((a, b) => a.section.localeCompare(b.section, 'pt') || a.name.localeCompare(b.name, 'pt')).map(f => <button className="food-row" key={f.id} onClick={() => setModal({ type: 'food', food: f })} disabled={offline}>
         <div><strong>{f.name}{f.brand ? ` · ${f.brand}` : ''}</strong><small>{f.state} · por {amount(f.basis, f.unit)} · {f.section}{f.pack ? ` · embalagem ${amount(f.pack, f.unit)}` : ''}</small><small>{f.estimated ? 'Estimado · ' : ''}{f.source}</small></div>
         {f.nutrition ? <MacroLine value={{ ...f.nutrition, missing: [], estimated: !!f.estimated }} /> : <MacroLine value={null} />}<SlidersHorizontal size={18} />

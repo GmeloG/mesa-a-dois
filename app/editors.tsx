@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { searchOff, type OffResult } from '@/lib/openfoodfacts';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -217,9 +218,20 @@ export function FoodEditor({ initial, commit, close }: {
     if (await commit(s => ({ ...s, foods: [...s.foods.filter(x => x.id !== f.id), clean] }), 'Alimento guardado; valores recalculados')) close();
   }
   const known = f.nutrition !== null;
+  const [offNote, setOffNote] = useState('');
+  function pick(result: OffResult) {
+    const food = result.food;
+    if (initial && food.unit !== f.unit) { setOffNote(`Este produto está em ${food.unit} e o alimento em ${f.unit}. Cria um novo alimento para o usar.`); return; }
+    setF(prev => initial
+      ? { ...prev, brand: food.brand ?? prev.brand, basis: food.basis, nutrition: food.nutrition, estimated: undefined, pack: food.pack ?? prev.pack, source: food.source }
+      : { ...food, id: prev.id });
+    setOffNote(result.complete ? 'Valores preenchidos a partir do Open Food Facts. Confirma-os no rótulo antes de guardar.' : 'Este produto não tem todos os valores nutricionais no Open Food Facts: ficam como desconhecidos até os preencheres.');
+  }
   return <form onSubmit={save} className="form-stack">
     <DialogTitle>{initial ? 'Editar alimento' : 'Adicionar alimento'}</DialogTitle>
-    <DialogDescription>Transcreve os valores do rótulo. Um produto ou estado diferente (cru/cozinhado) deve ser um novo alimento.</DialogDescription>
+    <DialogDescription>Procura o produto no Open Food Facts ou transcreve os valores do rótulo. Um produto ou estado diferente (cru/cozinhado) deve ser um novo alimento.</DialogDescription>
+    <OffSearch onPick={pick} />
+    {offNote && <p className="notice" role="status">{offNote}</p>}
     <div className="two-cols">
       <label className="field">Nome<Input required value={f.name} onChange={e => setF({ ...f, name: e.target.value })} placeholder="Ex.: Iogurte natural" /></label>
       <label className="field">Marca (opcional)<Input value={f.brand || ''} onChange={e => setF({ ...f, brand: e.target.value })} /></label>
@@ -280,4 +292,63 @@ export function ManualEditor({ commit, close }: { commit: Commit; close: () => v
     <label className="field">Quantidade<Input required value={quantity} onChange={e => setQuantity(e.target.value)} /></label>
     <Button type="submit" className="primary">Adicionar artigo</Button>
   </form>;
+}
+
+type Detector = { detect: (source: HTMLVideoElement) => Promise<{ rawValue: string }[]> };
+/** Pesquisa no Open Food Facts por nome, marca ou código de barras (e leitura pela câmara quando o navegador suporta). */
+function OffSearch({ onPick }: { onPick: (r: OffResult) => void }) {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<OffResult[] | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [scanning, setScanning] = useState(false);
+  const video = useRef<HTMLVideoElement>(null);
+  const abort = useRef<AbortController | null>(null);
+  const canScan = typeof window !== 'undefined' && 'BarcodeDetector' in window && !!navigator.mediaDevices?.getUserMedia;
+  useEffect(() => () => abort.current?.abort(), []);
+  async function run(value = query) {
+    if (!value.trim()) return;
+    if (!navigator.onLine) { setError('Sem ligação: a pesquisa precisa de internet.'); return; }
+    abort.current?.abort(); abort.current = new AbortController();
+    setBusy(true); setError(''); setResults(null);
+    try { setResults(await searchOff(value, abort.current.signal)); }
+    catch (e) { if ((e as Error).name !== 'AbortError') setError((e as Error).message); }
+    finally { setBusy(false); }
+  }
+  useEffect(() => {
+    if (!scanning) return;
+    let stream: MediaStream | null = null; let stop = false;
+    (async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        if (!video.current || stop) return;
+        video.current.srcObject = stream; await video.current.play();
+        const Ctor = (window as unknown as { BarcodeDetector: new (o: object) => Detector }).BarcodeDetector;
+        const detector = new Ctor({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e'] });
+        while (!stop) {
+          const codes = await detector.detect(video.current).catch(() => []);
+          if (codes[0]?.rawValue) { const code = codes[0].rawValue; setQuery(code); setScanning(false); run(code); return; }
+          await new Promise(r => setTimeout(r, 300));
+        }
+      } catch { setError('Não foi possível usar a câmara. Escreve o código de barras.'); setScanning(false); }
+    })();
+    return () => { stop = true; stream?.getTracks().forEach(t => t.stop()); };
+  }, [scanning]);
+  return <div className="off-search">
+    <label className="field">Procurar no Open Food Facts
+      <div className="off-row">
+        <Input value={query} placeholder="Ex.: Mimosa proteína, arroz agulha ou código de barras" enterKeyHint="search"
+          onChange={e => setQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); run(); } }} />
+        <Button type="button" variant="outline" onClick={() => run()} disabled={busy || !query.trim()}>{busy ? 'A procurar…' : 'Procurar'}</Button>
+        {canScan && <Button type="button" variant="ghost" onClick={() => setScanning(!scanning)}>{scanning ? 'Parar' : 'Câmara'}</Button>}
+      </div>
+    </label>
+    {scanning && <video ref={video} className="off-video" muted playsInline />}
+    {error && <p className="warning" role="alert">{error}</p>}
+    {results && results.length === 0 && <p className="note">Sem resultados. Experimenta outro nome, a marca ou o código de barras.</p>}
+    {results && results.length > 0 && <ul className="off-results">{results.map((r, i) => <li key={`${r.code}-${i}`}>
+      <button type="button" onClick={() => { onPick(r); setResults(null); }}><strong>{r.label}</strong><small>{r.detail}</small></button>
+    </li>)}</ul>}
+    <small className="muted">Dados abertos e colaborativos do Open Food Facts; podem ter erros.</small>
+  </div>;
 }
