@@ -10,7 +10,7 @@ import { Progress } from '@/components/ui/progress';
 import {
   type State, type Recipe, type Meal, type Person, type ShoppingRow, type Profile,
   PEOPLE, NAMES, SLOTS, MACRO_KEYS, localDate, monday, plusDay, nutrition, totals, fmt, amount, newMeal, scale, uid,
-  exampleWeek, suggested, addCatalogFoods, missingCatalogFoods, batchUsage, batchServingsLeft, mealNutrition, mealTotal, weekSummary,
+  exampleWeek, suggested, addCatalogFoods, missingCatalogFoods, applyImport, isImportBundle, type ImportBundle, batchUsage, batchServingsLeft, mealNutrition, mealTotal, weekSummary,
 } from '@/lib/model';
 import { Choice, NumberField, MacroLine, ingredientText } from './controls';
 import type { Commit } from './editors';
@@ -312,6 +312,7 @@ export function ProfilesView({ ctx }: { ctx: Ctx }) {
   const { state, commit, store, onExit, install, local, offline } = ctx;
   return <>
     <div className="profiles-grid">{PEOPLE.map(p => <ProfileCard key={p} person={p} saved={state.profiles[p]} commit={commit} offline={offline} />)}</div>
+    <PlansCard ctx={ctx} />
     <div className="settings-card"><div><h2>No vosso telemóvel</h2><p>Instala a aplicação para a abrir a partir do ecrã inicial. Sem ligação, podes consultar a última cópia sincronizada neste dispositivo; para guardar é preciso ligação.</p></div><Button variant="outline" onClick={install}><Download size={16} />Como instalar</Button><Button variant="ghost" onClick={() => { store.clearCache(); toast.success('Cópia offline removida deste dispositivo.'); }}>Apagar cópia offline</Button></div>
     <div className="settings-card"><div><h2>{local ? 'Demonstração' : 'Conta ligada'}</h2><p>{store.identity}</p></div><Button variant="outline" onClick={onExit}>{local ? 'Sair da demonstração' : 'Terminar sessão'}</Button></div>
     <div className="notice">{local ? 'Demonstração: dados de exemplo guardados apenas neste dispositivo. Para partilhar o plano, sai da demonstração e inicia sessão numa conta autorizada.' : 'O plano é partilhado entre as duas contas autorizadas e sincroniza automaticamente enquanto há ligação. Se o outro dispositivo guardar primeiro, a tua alteração não é sobreposta: o plano é atualizado e pedimos que a repitas.'}</div>
@@ -333,4 +334,51 @@ function ProfileCard({ person, saved, commit, offline }: { person: Person; saved
     <p className="note">As sugestões excluem receitas com ingredientes a evitar (pelo nome). Confirma sempre os rótulos em caso de alergia.</p>
     <div className="button-row"><Button type="submit" className="primary" disabled={offline || !dirty}>Guardar perfil</Button>{dirty && <Button type="button" variant="ghost" onClick={() => { setProfile(structuredClone(saved)); setDirty(false); }}>Cancelar</Button>}</div>
   </form>;
+}
+
+type PlanEntry = { file: string; title: string; description?: string };
+/** Importar planos (ficheiros incluídos na aplicação ou escolhidos no dispositivo) e exportar uma cópia dos dados. */
+function PlansCard({ ctx }: { ctx: Ctx }) {
+  const { state, commit, setConfirm, offline, changeWeek, setDate, navigate } = ctx;
+  const [plans, setPlans] = useState<PlanEntry[] | null>(null);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}planos/index.json`, { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : [])
+      .then(list => setPlans(Array.isArray(list) ? list : []))
+      .catch(() => setPlans([]));
+  }, []);
+  function ask(bundle: unknown) {
+    setError('');
+    if (!isImportBundle(bundle)) { setError('Este ficheiro não é um plano da Mesa a Dois.'); return; }
+    let preview;
+    try { preview = applyImport(state, bundle as ImportBundle).summary; } catch (e) { setError((e as Error).message); return; }
+    const parts = [`${preview.meals} refeições de ${dateLabel(preview.from)} a ${dateLabel(preview.to)}`];
+    if (preview.replaced) parts.push(`substitui ${preview.replaced} refeições já planeadas nesses dias`);
+    if (preview.foods) parts.push(`acrescenta ${preview.foods} alimentos`);
+    if (preview.recipes) parts.push(`acrescenta ${preview.recipes} receitas`);
+    if (preview.goals.length) parts.push(`atualiza os objetivos de ${preview.goals.map(p => NAMES[p]).join(' e ')}`);
+    setConfirm({ title: `Importar «${(bundle as ImportBundle).title || 'plano'}»?`, description: parts.join('; ') + '.', run: () => {
+      commit(s => applyImport(s, bundle as ImportBundle).state, 'Plano importado').then(ok => { if (ok && preview.from) { changeWeek(monday(preview.from)); setDate(preview.from); navigate('week'); } });
+    } });
+  }
+  async function load(file: string) {
+    try { const r = await fetch(`${import.meta.env.BASE_URL}planos/${file}`, { cache: 'no-cache' }); if (!r.ok) throw new Error(); ask(await r.json()); }
+    catch { setError('Não foi possível abrir o plano. Verifica a ligação.'); }
+  }
+  async function pickFile(file?: File) {
+    if (!file) return;
+    try { ask(JSON.parse(await file.text())); } catch { setError('Não foi possível ler o ficheiro (JSON inválido).'); }
+  }
+  function exportCopy() {
+    const blob = new Blob([JSON.stringify({ format: 'mesa-a-dois-copia', exportedAt: new Date().toISOString(), state }, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `mesa-a-dois-copia-${localDate()}.json`; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  return <div className="settings-card plans-card"><div><h2>Planos e cópias</h2><p>Importa um plano semanal preparado (refeições, receitas, alimentos e objetivos). As refeições dos dias do plano substituem as que lá estiverem; alimentos e receitas já existentes não são alterados.</p>
+    {plans && plans.length > 0 && <ul className="plan-list">{plans.map(p => <li key={p.file}><div><strong>{p.title}</strong>{p.description && <small>{p.description}</small>}</div><Button variant="outline" disabled={offline} onClick={() => load(p.file)}>Importar</Button></li>)}</ul>}
+    {error && <p className="warning" role="alert">{error}</p>}</div>
+    <label className={`file-button ${offline ? 'disabled' : ''}`}><input type="file" accept="application/json,.json" disabled={offline} onChange={e => { pickFile(e.target.files?.[0]); e.target.value = ''; }} />Importar ficheiro…</label>
+    <Button variant="ghost" onClick={exportCopy}><Download size={16} />Exportar cópia</Button>
+  </div>;
 }

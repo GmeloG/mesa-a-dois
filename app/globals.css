@@ -796,3 +796,8 @@ SOFTWARE.
 .off-results button{width:100%;text-align:left;display:grid;gap:2px;padding:9px 11px;border:1px solid #e0e7e9;border-radius:8px;background:#fff}
 .off-results button:hover{border-color:#087e70}.off-results small{color:#5d6f75;font-size:12px}
 .off-video{width:100%;max-height:240px;border-radius:8px;background:#000;object-fit:cover}
+.plans-card{flex-wrap:wrap}.plans-card>div{flex-basis:100%}
+.plan-list{display:grid;gap:8px;margin-top:12px}.plan-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid #e0e7e9;border-radius:10px;background:#fff}
+.plan-list small{display:block;color:#5d6f75;font-size:12px;margin-top:2px}
+.file-button{display:inline-flex;align-items:center;height:36px;padding:0 14px;border:1px solid #c9d3d8;border-radius:8px;background:#fff;font-size:14px;font-weight:500;cursor:pointer}
+.file-button input{display:none}.file-button.disabled{opacity:.5;pointer-events:none}

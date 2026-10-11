@@ -55,6 +55,11 @@ Aplicação web para o Gonçalo e a Inês planearem as refeições da semana, ac
 - Marcar artigos como comprados, com aviso se a quantidade mudar depois.
 - Artigos manuais (ex.: detergente), que se mantêm quando o plano muda.
 
+## Planos e cópias
+
+- Importar planos semanais preparados (refeições, receitas, alimentos e objetivos), incluídos na aplicação ou a partir de um ficheiro.
+- Exportar uma cópia de todos os dados.
+
 ## Perfis
 
 - Objetivos diários de calorias, proteína, hidratos de carbono e gordura de cada pessoa, definidos pelo próprio.

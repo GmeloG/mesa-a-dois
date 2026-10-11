@@ -180,6 +180,11 @@ export const seedFoods: Food[] = [
     f('spaghetti', 'Massa esparguete', 359, 12.5, 72, 1.5, 'Mercearia', 'seco'),
     f('ricebrown', 'Arroz integral', 355, 7.5, 74, 2.7, 'Mercearia'),
     f('milkskim', 'Leite magro', 34, 3.4, 4.9, 0.1, 'Laticínios', 'tal como vendido', 'ml'),
+    f('burger', 'Hambúrguer misto (vaca e porco)', 220, 17, 1, 16.5, 'Carne e peixe', 'cru'),
+    f('porkneck', 'Costeleta de cachaço de porco', 230, 17.5, 0, 18, 'Carne e peixe', 'cru, sem osso'),
+    f('burgerbun', 'Pão de hambúrguer', 270, 9, 48, 4.5, 'Padaria', 'tal como vendido'),
+    f('potatowhite', 'Batata', 77, 2, 17, 0.1, 'Fruta e legumes', 'crua, descascada'),
+    f('turkeyham', 'Fiambre de peito de peru', 105, 18, 2, 2.5, 'Charcutaria', 'tal como vendido'),
     { id: 'mimosa-protein', name: 'Leite Proteína', brand: 'Mimosa', unit: 'ml', basis: 100, state: 'tal como vendido', section: 'Laticínios', nutrition: { kcal: 59, protein: 10, carbs: 4.4, fat: 0.2 }, pack: 1000, source: 'Open Food Facts, código 5603722522093 (valores do rótulo submetidos por utilizadores); confirmar na embalagem.' },
     { id: 'mimosa-protein-cocoa', name: 'Leite Proteína Cacau', brand: 'Mimosa', unit: 'ml', basis: 100, state: 'tal como vendido', section: 'Laticínios', nutrition: { kcal: 65, protein: 10, carbs: 4.9, fat: 0.4 }, estimated: true, pack: 250, source: 'Open Food Facts, código 5603722517433 (energia aproximada); confirmar na embalagem.' }
 ];
@@ -295,3 +300,42 @@ export function addCatalogFoods(state: State): { state: State; added: number } {
     return { state: { ...state, foods: [...state.foods, ...structuredClone(missing)] }, added: missing.length };
 }
 export function missingCatalogFoods(state: State) { return seedFoods.filter(f => !state.foods.some(x => x.id === f.id)).length; }
+
+/** Ficheiro de importação: acrescenta alimentos/receitas em falta, refeições de um conjunto de dias e, opcionalmente, objetivos. */
+export type ImportBundle = {
+    format: 'mesa-a-dois-plano';
+    version: 1;
+    title?: string;
+    foods?: Food[];
+    recipes?: Recipe[];
+    meals?: Meal[];
+    goals?: Partial<Record<Person, Macros>>;
+};
+export function isImportBundle(value: unknown): value is ImportBundle {
+    const v = value as ImportBundle;
+    return !!v && typeof v === 'object' && v.format === 'mesa-a-dois-plano' && v.version === 1;
+}
+export type ImportSummary = { foods: number; recipes: number; meals: number; replaced: number; from: string; to: string; goals: Person[] };
+/**
+ * Aplica um plano importado. Alimentos e receitas só são acrescentados se ainda não existirem (não sobrescreve edições).
+ * As refeições dos dias incluídos no ficheiro substituem as existentes nesses dias.
+ */
+export function applyImport(state: State, bundle: ImportBundle): { state: State; summary: ImportSummary } {
+    const foods = (bundle.foods || []).filter(f => !state.foods.some(x => x.id === f.id));
+    const allFoods = [...state.foods, ...foods];
+    const recipes = (bundle.recipes || []).filter(r => !state.recipes.some(x => x.id === r.id));
+    const meals = (bundle.meals || []).map(m => ({ ...structuredClone(m), id: uid(), batchId: undefined }));
+    for (const m of meals) delete m.batchId;
+    const days = new Set(meals.map(m => m.date));
+    const replaced = state.meals.filter(m => days.has(m.date)).length;
+    const dates = [...days].sort();
+    const profiles = structuredClone(state.profiles);
+    const goals = PEOPLE.filter(p => bundle.goals?.[p]);
+    for (const p of goals) profiles[p].goals = { ...bundle.goals![p]! };
+    const missing = meals.flatMap(m => Object.values(m.portions).flatMap(x => x || [])).find(i => !allFoods.some(f => f.id === i.foodId));
+    if (missing) throw new Error(`O ficheiro usa um alimento que não existe (${missing.foodId}).`);
+    return {
+        state: { ...state, foods: allFoods, recipes: [...state.recipes, ...recipes], meals: [...state.meals.filter(m => !days.has(m.date)), ...meals], profiles },
+        summary: { foods: foods.length, recipes: recipes.length, meals: meals.length, replaced, from: dates[0] || '', to: dates[dates.length - 1] || '', goals },
+    };
+}

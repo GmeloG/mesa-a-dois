@@ -1,0 +1,2539 @@
+{
+ "format": "mesa-a-dois-plano",
+ "version": 1,
+ "title": "Semana de 12 a 18 de outubro",
+ "foods": [
+  {
+   "id": "apple",
+   "name": "Maçã",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "parte comestível",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 52.0,
+    "protein": 0.3,
+    "carbs": 14.0,
+    "fat": 0.2
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "banana",
+   "name": "Banana",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "parte comestível",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 89.0,
+    "protein": 1.1,
+    "carbs": 23.0,
+    "fat": 0.3
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "berries",
+   "name": "Frutos vermelhos",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "parte comestível",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 45.0,
+    "protein": 1.0,
+    "carbs": 9.0,
+    "fat": 0.5
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "bread",
+   "name": "Pão integral",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Padaria",
+   "nutrition": {
+    "kcal": 250.0,
+    "protein": 9.0,
+    "carbs": 43.0,
+    "fat": 4.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "broccoli",
+   "name": "Brócolos",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "parte comestível",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 34.0,
+    "protein": 2.8,
+    "carbs": 4.0,
+    "fat": 0.4
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "burger",
+   "name": "Hambúrguer misto (vaca e porco)",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "cru",
+   "section": "Carne e peixe",
+   "nutrition": {
+    "kcal": 220.0,
+    "protein": 17.0,
+    "carbs": 1.0,
+    "fat": 16.5
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "burgerbun",
+   "name": "Pão de hambúrguer",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Padaria",
+   "nutrition": {
+    "kcal": 270.0,
+    "protein": 9.0,
+    "carbs": 48.0,
+    "fat": 4.5
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "egg",
+   "name": "Ovo médio",
+   "unit": "un",
+   "basis": 1.0,
+   "state": "1 ovo médio, parte comestível",
+   "section": "Ovos",
+   "nutrition": {
+    "kcal": 72.0,
+    "protein": 6.3,
+    "carbs": 0.4,
+    "fat": 4.8
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "lettuce",
+   "name": "Alface",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "parte comestível",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 15.0,
+    "protein": 1.4,
+    "carbs": 1.5,
+    "fat": 0.2
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "milk",
+   "name": "Leite meio-gordo",
+   "unit": "ml",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Laticínios",
+   "nutrition": {
+    "kcal": 47.0,
+    "protein": 3.4,
+    "carbs": 4.8,
+    "fat": 1.6
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "mimosa-protein",
+   "name": "Leite Proteína",
+   "brand": "Mimosa",
+   "unit": "ml",
+   "basis": 100,
+   "state": "tal como vendido",
+   "section": "Laticínios",
+   "nutrition": {
+    "kcal": 59,
+    "protein": 10,
+    "carbs": 4.4,
+    "fat": 0.2
+   },
+   "pack": 1000,
+   "source": "Open Food Facts, código 5603722522093 (valores do rótulo submetidos por utilizadores); confirmar na embalagem."
+  },
+  {
+   "id": "mimosa-protein-cocoa",
+   "name": "Leite Proteína Cacau",
+   "brand": "Mimosa",
+   "unit": "ml",
+   "basis": 100,
+   "state": "tal como vendido",
+   "section": "Laticínios",
+   "nutrition": {
+    "kcal": 65,
+    "protein": 10,
+    "carbs": 4.9,
+    "fat": 0.4
+   },
+   "estimated": true,
+   "pack": 250,
+   "source": "Open Food Facts, código 5603722517433 (energia aproximada); confirmar na embalagem."
+  },
+  {
+   "id": "nuts",
+   "name": "Nozes",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "miolo",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 654.0,
+    "protein": 15.0,
+    "carbs": 7.0,
+    "fat": 65.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "oats",
+   "name": "Flocos de aveia",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "seco",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 370.0,
+    "protein": 13.0,
+    "carbs": 60.0,
+    "fat": 7.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "oil",
+   "name": "Azeite",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 884.0,
+    "protein": 0.0,
+    "carbs": 0.0,
+    "fat": 100.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "peanut",
+   "name": "Manteiga de amendoim",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 600.0,
+    "protein": 26.0,
+    "carbs": 14.0,
+    "fat": 50.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "porkneck",
+   "name": "Costeleta de cachaço de porco",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "cru, sem osso",
+   "section": "Carne e peixe",
+   "nutrition": {
+    "kcal": 230.0,
+    "protein": 17.5,
+    "carbs": 0.0,
+    "fat": 18.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "potato",
+   "name": "Batata-doce",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "crua, descascada",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 86.0,
+    "protein": 1.6,
+    "carbs": 20.0,
+    "fat": 0.1
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "potatowhite",
+   "name": "Batata",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "crua, descascada",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 77.0,
+    "protein": 2.0,
+    "carbs": 17.0,
+    "fat": 0.1
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "rice",
+   "name": "Arroz agulha",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "cru",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 360.0,
+    "protein": 7.0,
+    "carbs": 79.0,
+    "fat": 1.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "salmon",
+   "name": "Salmão",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "cru, sem espinhas",
+   "section": "Carne e peixe",
+   "nutrition": {
+    "kcal": 208.0,
+    "protein": 20.0,
+    "carbs": 0.0,
+    "fat": 13.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "skyr",
+   "name": "Skyr natural",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Laticínios",
+   "nutrition": {
+    "kcal": 62.0,
+    "protein": 11.0,
+    "carbs": 4.0,
+    "fat": 0.2
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "tomato",
+   "name": "Tomate",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "parte comestível",
+   "section": "Fruta e legumes",
+   "nutrition": {
+    "kcal": 18.0,
+    "protein": 0.9,
+    "carbs": 3.0,
+    "fat": 0.2
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "tuna",
+   "name": "Atum ao natural",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "escorrido",
+   "section": "Conservas",
+   "nutrition": {
+    "kcal": 110.0,
+    "protein": 25.0,
+    "carbs": 0.0,
+    "fat": 1.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "turkeyham",
+   "name": "Fiambre de peito de peru",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Charcutaria",
+   "nutrition": {
+    "kcal": 105.0,
+    "protein": 18.0,
+    "carbs": 2.0,
+    "fat": 2.5
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "whey",
+   "name": "Proteína whey",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "pó",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 390.0,
+    "protein": 78.0,
+    "carbs": 7.0,
+    "fat": 6.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "wrap",
+   "name": "Tortilha integral",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 310.0,
+    "protein": 9.0,
+    "carbs": 50.0,
+    "fat": 8.0
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  }
+ ],
+ "recipes": [
+  {
+   "id": "pl-papas",
+   "name": "Papas de aveia proteicas com banana",
+   "category": "Pequeno-almoço",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "milk",
+     "quantity": 250
+    },
+    {
+     "foodId": "oats",
+     "quantity": 60
+    },
+    {
+     "foodId": "whey",
+     "quantity": 25
+    },
+    {
+     "foodId": "banana",
+     "quantity": 100
+    },
+    {
+     "foodId": "peanut",
+     "quantity": 10
+    }
+   ],
+   "steps": "Aquecer o leite com a aveia em lume brando, mexendo, 4–5 min. Fora do lume, juntar a proteína whey e mexer bem. Servir com a banana às rodelas e a manteiga de amendoim.",
+   "minutes": 10,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-ovos",
+   "name": "Ovos mexidos com pão e fiambre de peru",
+   "category": "Pequeno-almoço",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "egg",
+     "quantity": 3
+    },
+    {
+     "foodId": "turkeyham",
+     "quantity": 40
+    },
+    {
+     "foodId": "bread",
+     "quantity": 70
+    },
+    {
+     "foodId": "tomato",
+     "quantity": 80
+    },
+    {
+     "foodId": "oil",
+     "quantity": 4
+    }
+   ],
+   "steps": "Bater os ovos e mexê-los numa frigideira com o azeite até ficarem cozinhados. Servir com o pão, o fiambre e o tomate às rodelas.",
+   "minutes": 10,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-skyr",
+   "name": "Taça de skyr, aveia e frutos vermelhos",
+   "category": "Pequeno-almoço",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "skyr",
+     "quantity": 200
+    },
+    {
+     "foodId": "oats",
+     "quantity": 50
+    },
+    {
+     "foodId": "berries",
+     "quantity": 100
+    },
+    {
+     "foodId": "banana",
+     "quantity": 80
+    },
+    {
+     "foodId": "peanut",
+     "quantity": 10
+    }
+   ],
+   "steps": "Colocar o skyr numa taça e juntar a aveia, os frutos vermelhos, a banana e a manteiga de amendoim.",
+   "minutes": 5,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-mimosa",
+   "name": "Leite Proteína Mimosa com banana e nozes",
+   "category": "Lanche da manhã",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "mimosa-protein",
+     "quantity": 250
+    },
+    {
+     "foodId": "banana",
+     "quantity": 120
+    },
+    {
+     "foodId": "nuts",
+     "quantity": 15
+    }
+   ],
+   "steps": "Servir o Leite Proteína com a banana e as nozes. Bom para levar.",
+   "minutes": 2,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Para levar"
+   ]
+  },
+  {
+   "id": "pl-pao-maca",
+   "name": "Pão com manteiga de amendoim, maçã e Leite Proteína Cacau",
+   "category": "Lanche da manhã",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "mimosa-protein-cocoa",
+     "quantity": 250
+    },
+    {
+     "foodId": "bread",
+     "quantity": 60
+    },
+    {
+     "foodId": "peanut",
+     "quantity": 15
+    },
+    {
+     "foodId": "apple",
+     "quantity": 150
+    }
+   ],
+   "steps": "Barrar o pão com a manteiga de amendoim. Servir com a maçã e o Leite Proteína Cacau (1 garrafa).",
+   "minutes": 3,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Para levar"
+   ]
+  },
+  {
+   "id": "pl-sandes",
+   "name": "Sandes de fiambre de peru e Leite Proteína Cacau",
+   "category": "Lanche da tarde",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "bread",
+     "quantity": 80
+    },
+    {
+     "foodId": "turkeyham",
+     "quantity": 60
+    },
+    {
+     "foodId": "lettuce",
+     "quantity": 20
+    },
+    {
+     "foodId": "mimosa-protein-cocoa",
+     "quantity": 250
+    }
+   ],
+   "steps": "Montar a sandes com o pão, o fiambre e a alface. Acompanhar com o Leite Proteína Cacau (1 garrafa).",
+   "minutes": 5,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Para levar"
+   ]
+  },
+  {
+   "id": "pl-wrap",
+   "name": "Wrap de atum e salada",
+   "category": "Lanche da tarde",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "wrap",
+     "quantity": 60
+    },
+    {
+     "foodId": "tuna",
+     "quantity": 80
+    },
+    {
+     "foodId": "lettuce",
+     "quantity": 30
+    },
+    {
+     "foodId": "tomato",
+     "quantity": 60
+    }
+   ],
+   "steps": "Escorrer o atum, lavar e cortar os legumes. Rechear a tortilha e enrolar.",
+   "minutes": 10,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Para levar"
+   ]
+  },
+  {
+   "id": "pl-salmao-bd",
+   "name": "Salmão no forno com batata-doce e brócolos",
+   "category": "Jantar",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "salmon",
+     "quantity": 150
+    },
+    {
+     "foodId": "potato",
+     "quantity": 250
+    },
+    {
+     "foodId": "broccoli",
+     "quantity": 150
+    },
+    {
+     "foodId": "oil",
+     "quantity": 5
+    }
+   ],
+   "steps": "Cortar a batata-doce em cubos, regar com metade do azeite e levar ao forno a 200 °C durante 15 min. Juntar o salmão e assar mais 15 min, até estar cozinhado. Servir com os brócolos cozidos e o restante azeite.",
+   "minutes": 35,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-salmao-arroz",
+   "name": "Salmão grelhado com arroz e brócolos",
+   "category": "Jantar",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "salmon",
+     "quantity": 150
+    },
+    {
+     "foodId": "rice",
+     "quantity": 80
+    },
+    {
+     "foodId": "broccoli",
+     "quantity": 150
+    },
+    {
+     "foodId": "oil",
+     "quantity": 5
+    }
+   ],
+   "steps": "Cozer o arroz segundo a embalagem. Grelhar o salmão até estar cozinhado. Cozer os brócolos. Servir com o azeite.",
+   "minutes": 25,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-hamburguer",
+   "name": "Hambúrguer no pão com batata-doce assada e salada",
+   "category": "Jantar",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "burger",
+     "quantity": 150
+    },
+    {
+     "foodId": "burgerbun",
+     "quantity": 80
+    },
+    {
+     "foodId": "potato",
+     "quantity": 150
+    },
+    {
+     "foodId": "lettuce",
+     "quantity": 40
+    },
+    {
+     "foodId": "tomato",
+     "quantity": 80
+    },
+    {
+     "foodId": "oil",
+     "quantity": 3
+    }
+   ],
+   "steps": "Assar a batata-doce às tiras no forno a 200 °C com o azeite (20–25 min). Grelhar os hambúrgueres até estarem completamente cozinhados por dentro. Montar no pão com alface e tomate.",
+   "minutes": 30,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-costeletas",
+   "name": "Costeletas de cachaço com batata e salada",
+   "category": "Jantar",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "porkneck",
+     "quantity": 200
+    },
+    {
+     "foodId": "potatowhite",
+     "quantity": 300
+    },
+    {
+     "foodId": "lettuce",
+     "quantity": 50
+    },
+    {
+     "foodId": "tomato",
+     "quantity": 100
+    },
+    {
+     "foodId": "oil",
+     "quantity": 5
+    }
+   ],
+   "steps": "Cozer a batata (ou assar no forno). Grelhar as costeletas até estarem bem cozinhadas. Servir com salada de alface e tomate temperada com o azeite. Pesar a carne sem osso, ou acrescentar o peso do osso na compra.",
+   "minutes": 35,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "category": "Ceia",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "milk",
+     "quantity": 300
+    },
+    {
+     "foodId": "whey",
+     "quantity": 30
+    },
+    {
+     "foodId": "oats",
+     "quantity": 40
+    }
+   ],
+   "steps": "Triturar o leite com a proteína whey e a aveia.",
+   "minutes": 3,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Sem fogão"
+   ]
+  },
+  {
+   "id": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "category": "Ceia",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "skyr",
+     "quantity": 170
+    },
+    {
+     "foodId": "berries",
+     "quantity": 80
+    }
+   ],
+   "steps": "Colocar o skyr numa taça e acrescentar os frutos vermelhos.",
+   "minutes": 3,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Sem fogão"
+   ]
+  }
+ ],
+ "meals": [
+  {
+   "id": "4e1ddc2c-389c-4094-8db5-ec47711259ff",
+   "date": "2026-10-12",
+   "slot": "Pequeno-almoço",
+   "recipeId": "pl-papas",
+   "name": "Papas de aveia proteicas com banana",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 380
+     },
+     {
+      "foodId": "oats",
+      "quantity": 90
+     },
+     {
+      "foodId": "whey",
+      "quantity": 20
+     },
+     {
+      "foodId": "banana",
+      "quantity": 150
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 12
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "milk",
+      "quantity": 110
+     },
+     {
+      "foodId": "oats",
+      "quantity": 25
+     },
+     {
+      "foodId": "whey",
+      "quantity": 15
+     },
+     {
+      "foodId": "banana",
+      "quantity": 45
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 11
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "cb800d2d-8abe-4153-82b5-ddef421b02f6",
+   "date": "2026-10-12",
+   "slot": "Lanche da manhã",
+   "recipeId": "pl-mimosa",
+   "name": "Leite Proteína Mimosa com banana e nozes",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 180
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 23
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 120
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 20
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "694a895e-060f-497e-bb72-9c99ff81ed5b",
+   "date": "2026-10-12",
+   "slot": "Lanche da tarde",
+   "recipeId": "pl-sandes",
+   "name": "Sandes de fiambre de peru e Leite Proteína Cacau",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "bread",
+      "quantity": 105
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 50
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 20
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "bread",
+      "quantity": 55
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 35
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 15
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "a79c1b8b-43a3-4af9-9e3a-8ee1b32cdc98",
+   "date": "2026-10-12",
+   "slot": "Jantar",
+   "recipeId": "pl-salmao-bd",
+   "name": "Salmão no forno com batata-doce e brócolos",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "salmon",
+      "quantity": 180
+     },
+     {
+      "foodId": "potato",
+      "quantity": 435
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 150
+     },
+     {
+      "foodId": "oil",
+      "quantity": 7
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "salmon",
+      "quantity": 140
+     },
+     {
+      "foodId": "potato",
+      "quantity": 210
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 120
+     },
+     {
+      "foodId": "oil",
+      "quantity": 6
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "11884e62-fd35-4a2a-a02e-7b99c991036d",
+   "date": "2026-10-12",
+   "slot": "Ceia",
+   "recipeId": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 280
+     },
+     {
+      "foodId": "whey",
+      "quantity": 25
+     },
+     {
+      "foodId": "oats",
+      "quantity": 35
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "c7cbaa40-a83d-43fe-9fdc-2d7066a24d20",
+   "date": "2026-10-12",
+   "slot": "Ceia",
+   "recipeId": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 100
+     },
+     {
+      "foodId": "berries",
+      "quantity": 65
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "faaf9b18-b9b3-4e14-bf59-628b3d48c7d4",
+   "date": "2026-10-13",
+   "slot": "Pequeno-almoço",
+   "recipeId": "pl-ovos",
+   "name": "Ovos mexidos com pão e fiambre de peru",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "egg",
+      "quantity": 3
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 40
+     },
+     {
+      "foodId": "bread",
+      "quantity": 120
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "egg",
+      "quantity": 2
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 40
+     },
+     {
+      "foodId": "bread",
+      "quantity": 45
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 65
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "096c578c-8e56-4141-bcf7-6e22dcdfd5b1",
+   "date": "2026-10-13",
+   "slot": "Lanche da manhã",
+   "recipeId": "pl-pao-maca",
+   "name": "Pão com manteiga de amendoim, maçã e Leite Proteína Cacau",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     },
+     {
+      "foodId": "bread",
+      "quantity": 95
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 11
+     },
+     {
+      "foodId": "apple",
+      "quantity": 150
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     },
+     {
+      "foodId": "bread",
+      "quantity": 45
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 11
+     },
+     {
+      "foodId": "apple",
+      "quantity": 120
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "150ce3d0-8eae-4a22-a45f-ed9071bb731e",
+   "date": "2026-10-13",
+   "slot": "Lanche da tarde",
+   "recipeId": "pl-wrap",
+   "name": "Wrap de atum e salada",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "wrap",
+      "quantity": 95
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 70
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 30
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 60
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "wrap",
+      "quantity": 35
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 80
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 25
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 50
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "2b453bec-f6f9-4194-a8b1-20a0756f7bec",
+   "date": "2026-10-13",
+   "slot": "Jantar",
+   "recipeId": "pl-hamburguer",
+   "name": "Hambúrguer no pão com batata-doce assada e salada",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "burger",
+      "quantity": 150
+     },
+     {
+      "foodId": "burgerbun",
+      "quantity": 80
+     },
+     {
+      "foodId": "potato",
+      "quantity": 270
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 40
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "burger",
+      "quantity": 120
+     },
+     {
+      "foodId": "burgerbun",
+      "quantity": 80
+     },
+     {
+      "foodId": "potato",
+      "quantity": 115
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 30
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 65
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "4ba1cb57-a699-48ba-8dbb-d4e78c5b9d52",
+   "date": "2026-10-13",
+   "slot": "Ceia",
+   "recipeId": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 510
+     },
+     {
+      "foodId": "whey",
+      "quantity": 25
+     },
+     {
+      "foodId": "oats",
+      "quantity": 70
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "345316a4-fe48-40f1-b6a2-d1faa9dc06ff",
+   "date": "2026-10-13",
+   "slot": "Ceia",
+   "recipeId": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 165
+     },
+     {
+      "foodId": "berries",
+      "quantity": 65
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "d5067f24-2a4b-4348-aa8b-4d5849f894b2",
+   "date": "2026-10-14",
+   "slot": "Pequeno-almoço",
+   "recipeId": "pl-skyr",
+   "name": "Taça de skyr, aveia e frutos vermelhos",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "skyr",
+      "quantity": 160
+     },
+     {
+      "foodId": "oats",
+      "quantity": 85
+     },
+     {
+      "foodId": "berries",
+      "quantity": 100
+     },
+     {
+      "foodId": "banana",
+      "quantity": 135
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 10
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 120
+     },
+     {
+      "foodId": "oats",
+      "quantity": 35
+     },
+     {
+      "foodId": "berries",
+      "quantity": 80
+     },
+     {
+      "foodId": "banana",
+      "quantity": 55
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 9
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "a22a72ad-3312-4faf-bf0e-9d465de2b457",
+   "date": "2026-10-14",
+   "slot": "Lanche da manhã",
+   "recipeId": "pl-mimosa",
+   "name": "Leite Proteína Mimosa com banana e nozes",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 180
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 16
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 110
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 14
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "e8794f54-3f95-4bca-b14e-4b6fa92f6679",
+   "date": "2026-10-14",
+   "slot": "Lanche da tarde",
+   "recipeId": "pl-sandes",
+   "name": "Sandes de fiambre de peru e Leite Proteína Cacau",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "bread",
+      "quantity": 115
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 50
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 20
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "bread",
+      "quantity": 60
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 45
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 15
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "36b2aaaf-3d19-4cb6-bef3-d72ca278ebe5",
+   "date": "2026-10-14",
+   "slot": "Jantar",
+   "recipeId": "pl-costeletas",
+   "name": "Costeletas de cachaço com batata e salada",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "porkneck",
+      "quantity": 220
+     },
+     {
+      "foodId": "potatowhite",
+      "quantity": 540
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 50
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 100
+     },
+     {
+      "foodId": "oil",
+      "quantity": 5
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "porkneck",
+      "quantity": 150
+     },
+     {
+      "foodId": "potatowhite",
+      "quantity": 215
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 40
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 5
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "bc04bef6-0339-48fe-bedc-a6a9a43a155e",
+   "date": "2026-10-14",
+   "slot": "Ceia",
+   "recipeId": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 330
+     },
+     {
+      "foodId": "whey",
+      "quantity": 25
+     },
+     {
+      "foodId": "oats",
+      "quantity": 45
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "bdb30ac6-5f63-4bb1-89f7-04eb48e54111",
+   "date": "2026-10-14",
+   "slot": "Ceia",
+   "recipeId": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 100
+     },
+     {
+      "foodId": "berries",
+      "quantity": 65
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "518cdd60-ba40-4248-a613-309734040406",
+   "date": "2026-10-15",
+   "slot": "Pequeno-almoço",
+   "recipeId": "pl-papas",
+   "name": "Papas de aveia proteicas com banana",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 370
+     },
+     {
+      "foodId": "oats",
+      "quantity": 90
+     },
+     {
+      "foodId": "whey",
+      "quantity": 20
+     },
+     {
+      "foodId": "banana",
+      "quantity": 145
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 12
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "milk",
+      "quantity": 140
+     },
+     {
+      "foodId": "oats",
+      "quantity": 35
+     },
+     {
+      "foodId": "whey",
+      "quantity": 20
+     },
+     {
+      "foodId": "banana",
+      "quantity": 55
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 11
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "d40b6c2a-21fb-4932-9480-57e70d007c54",
+   "date": "2026-10-15",
+   "slot": "Lanche da manhã",
+   "recipeId": "pl-pao-maca",
+   "name": "Pão com manteiga de amendoim, maçã e Leite Proteína Cacau",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     },
+     {
+      "foodId": "bread",
+      "quantity": 70
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 19
+     },
+     {
+      "foodId": "apple",
+      "quantity": 150
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     },
+     {
+      "foodId": "bread",
+      "quantity": 50
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 18
+     },
+     {
+      "foodId": "apple",
+      "quantity": 120
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "77e0d22e-89cc-4320-9530-89e13863a898",
+   "date": "2026-10-15",
+   "slot": "Lanche da tarde",
+   "recipeId": "pl-wrap",
+   "name": "Wrap de atum e salada",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "wrap",
+      "quantity": 80
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 65
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 30
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 60
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "wrap",
+      "quantity": 55
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 60
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 25
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 50
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "749c9239-7ddd-43ed-b180-490bf0d538b2",
+   "date": "2026-10-15",
+   "slot": "Jantar",
+   "recipeId": "pl-salmao-arroz",
+   "name": "Salmão grelhado com arroz e brócolos",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "salmon",
+      "quantity": 180
+     },
+     {
+      "foodId": "rice",
+      "quantity": 115
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 150
+     },
+     {
+      "foodId": "oil",
+      "quantity": 6
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "salmon",
+      "quantity": 140
+     },
+     {
+      "foodId": "rice",
+      "quantity": 40
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 120
+     },
+     {
+      "foodId": "oil",
+      "quantity": 6
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "85b99a53-042f-48f8-9fe5-6787c0656d2c",
+   "date": "2026-10-15",
+   "slot": "Ceia",
+   "recipeId": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 350
+     },
+     {
+      "foodId": "whey",
+      "quantity": 25
+     },
+     {
+      "foodId": "oats",
+      "quantity": 45
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "c2dfd7c8-4fa0-41fe-9c00-91470c64d92c",
+   "date": "2026-10-15",
+   "slot": "Ceia",
+   "recipeId": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 120
+     },
+     {
+      "foodId": "berries",
+      "quantity": 65
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "db0e9ea7-5ff8-41e0-b51c-2f91511a3db8",
+   "date": "2026-10-16",
+   "slot": "Pequeno-almoço",
+   "recipeId": "pl-ovos",
+   "name": "Ovos mexidos com pão e fiambre de peru",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "egg",
+      "quantity": 3
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 30
+     },
+     {
+      "foodId": "bread",
+      "quantity": 115
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 4
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "egg",
+      "quantity": 2
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 35
+     },
+     {
+      "foodId": "bread",
+      "quantity": 45
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 65
+     },
+     {
+      "foodId": "oil",
+      "quantity": 4
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "1dc94d71-0340-4d6c-ab65-1fdcbdb288b4",
+   "date": "2026-10-16",
+   "slot": "Lanche da manhã",
+   "recipeId": "pl-mimosa",
+   "name": "Leite Proteína Mimosa com banana e nozes",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 210
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 14
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 105
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 11
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "e1a94e8e-5a2c-46f8-9fc3-93bced92434b",
+   "date": "2026-10-16",
+   "slot": "Lanche da tarde",
+   "recipeId": "pl-sandes",
+   "name": "Sandes de fiambre de peru e Leite Proteína Cacau",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "bread",
+      "quantity": 140
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 50
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 20
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "bread",
+      "quantity": 50
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 45
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 15
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "c96911ca-d842-4915-b1c6-fcc36dadaee8",
+   "date": "2026-10-16",
+   "slot": "Jantar",
+   "recipeId": "pl-hamburguer",
+   "name": "Hambúrguer no pão com batata-doce assada e salada",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "burger",
+      "quantity": 150
+     },
+     {
+      "foodId": "burgerbun",
+      "quantity": 80
+     },
+     {
+      "foodId": "potato",
+      "quantity": 270
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 40
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "burger",
+      "quantity": 120
+     },
+     {
+      "foodId": "burgerbun",
+      "quantity": 80
+     },
+     {
+      "foodId": "potato",
+      "quantity": 125
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 30
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 65
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "c0e12c06-8f24-4b28-857c-90d7e55be10c",
+   "date": "2026-10-16",
+   "slot": "Ceia",
+   "recipeId": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 460
+     },
+     {
+      "foodId": "whey",
+      "quantity": 25
+     },
+     {
+      "foodId": "oats",
+      "quantity": 60
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "3cbe9361-6ac3-4b25-98d7-85b33cab703b",
+   "date": "2026-10-16",
+   "slot": "Ceia",
+   "recipeId": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 100
+     },
+     {
+      "foodId": "berries",
+      "quantity": 65
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "ae77824b-f501-4db8-ae7f-8de25ebc3c9a",
+   "date": "2026-10-17",
+   "slot": "Pequeno-almoço",
+   "recipeId": "pl-skyr",
+   "name": "Taça de skyr, aveia e frutos vermelhos",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "skyr",
+      "quantity": 185
+     },
+     {
+      "foodId": "oats",
+      "quantity": 85
+     },
+     {
+      "foodId": "berries",
+      "quantity": 100
+     },
+     {
+      "foodId": "banana",
+      "quantity": 135
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 9
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 165
+     },
+     {
+      "foodId": "oats",
+      "quantity": 35
+     },
+     {
+      "foodId": "berries",
+      "quantity": 80
+     },
+     {
+      "foodId": "banana",
+      "quantity": 50
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 9
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "556ea420-9dc5-4859-9252-f90ab2804f36",
+   "date": "2026-10-17",
+   "slot": "Lanche da manhã",
+   "recipeId": "pl-pao-maca",
+   "name": "Pão com manteiga de amendoim, maçã e Leite Proteína Cacau",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     },
+     {
+      "foodId": "bread",
+      "quantity": 80
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 13
+     },
+     {
+      "foodId": "apple",
+      "quantity": 150
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     },
+     {
+      "foodId": "bread",
+      "quantity": 50
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 14
+     },
+     {
+      "foodId": "apple",
+      "quantity": 120
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "58fb54dd-16d2-406a-8e0e-04b8714b5b61",
+   "date": "2026-10-17",
+   "slot": "Lanche da tarde",
+   "recipeId": "pl-wrap",
+   "name": "Wrap de atum e salada",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "wrap",
+      "quantity": 80
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 65
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 30
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 60
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "wrap",
+      "quantity": 45
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 70
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 25
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 50
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "e38725d5-75c1-459e-8d9a-21a66e8bf1aa",
+   "date": "2026-10-17",
+   "slot": "Jantar",
+   "recipeId": "pl-costeletas",
+   "name": "Costeletas de cachaço com batata e salada",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "porkneck",
+      "quantity": 220
+     },
+     {
+      "foodId": "potatowhite",
+      "quantity": 535
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 50
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 100
+     },
+     {
+      "foodId": "oil",
+      "quantity": 5
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "porkneck",
+      "quantity": 150
+     },
+     {
+      "foodId": "potatowhite",
+      "quantity": 200
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 40
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 5
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "0e2c53c4-6dfd-4bc7-8292-6c8f5ba7ce80",
+   "date": "2026-10-17",
+   "slot": "Ceia",
+   "recipeId": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 410
+     },
+     {
+      "foodId": "whey",
+      "quantity": 25
+     },
+     {
+      "foodId": "oats",
+      "quantity": 55
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "f23c8a49-a8f4-4a71-9c60-830d173b0ef4",
+   "date": "2026-10-17",
+   "slot": "Ceia",
+   "recipeId": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 145
+     },
+     {
+      "foodId": "berries",
+      "quantity": 65
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "b18ef603-3367-456f-8e7d-dc6ceb00404d",
+   "date": "2026-10-18",
+   "slot": "Pequeno-almoço",
+   "recipeId": "pl-papas",
+   "name": "Papas de aveia proteicas com banana",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 380
+     },
+     {
+      "foodId": "oats",
+      "quantity": 90
+     },
+     {
+      "foodId": "whey",
+      "quantity": 20
+     },
+     {
+      "foodId": "banana",
+      "quantity": 150
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 12
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "milk",
+      "quantity": 110
+     },
+     {
+      "foodId": "oats",
+      "quantity": 25
+     },
+     {
+      "foodId": "whey",
+      "quantity": 15
+     },
+     {
+      "foodId": "banana",
+      "quantity": 45
+     },
+     {
+      "foodId": "peanut",
+      "quantity": 11
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "14292ee8-df09-4009-ba8f-2b5fce4fb574",
+   "date": "2026-10-18",
+   "slot": "Lanche da manhã",
+   "recipeId": "pl-mimosa",
+   "name": "Leite Proteína Mimosa com banana e nozes",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 180
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 23
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "mimosa-protein",
+      "quantity": 250
+     },
+     {
+      "foodId": "banana",
+      "quantity": 120
+     },
+     {
+      "foodId": "nuts",
+      "quantity": 20
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "527c97d6-eef7-4b5e-b155-afd8f51afa22",
+   "date": "2026-10-18",
+   "slot": "Lanche da tarde",
+   "recipeId": "pl-sandes",
+   "name": "Sandes de fiambre de peru e Leite Proteína Cacau",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "bread",
+      "quantity": 105
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 50
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 20
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "bread",
+      "quantity": 55
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 35
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 15
+     },
+     {
+      "foodId": "mimosa-protein-cocoa",
+      "quantity": 250
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "44ab7f08-992f-4e1d-838e-34dca246579f",
+   "date": "2026-10-18",
+   "slot": "Jantar",
+   "recipeId": "pl-salmao-bd",
+   "name": "Salmão no forno com batata-doce e brócolos",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "salmon",
+      "quantity": 180
+     },
+     {
+      "foodId": "potato",
+      "quantity": 435
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 150
+     },
+     {
+      "foodId": "oil",
+      "quantity": 7
+     }
+    ],
+    "ines": [
+     {
+      "foodId": "salmon",
+      "quantity": 140
+     },
+     {
+      "foodId": "potato",
+      "quantity": 210
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 120
+     },
+     {
+      "foodId": "oil",
+      "quantity": 6
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "81861847-1fc8-4f8a-a33e-71114a58279a",
+   "date": "2026-10-18",
+   "slot": "Ceia",
+   "recipeId": "pl-batido",
+   "name": "Batido de whey, leite e aveia",
+   "portions": {
+    "goncalo": [
+     {
+      "foodId": "milk",
+      "quantity": 280
+     },
+     {
+      "foodId": "whey",
+      "quantity": 25
+     },
+     {
+      "foodId": "oats",
+      "quantity": 35
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "b0c0de6d-31a9-4207-9349-bf40abef1b8c",
+   "date": "2026-10-18",
+   "slot": "Ceia",
+   "recipeId": "pl-skyr-ceia",
+   "name": "Skyr com frutos vermelhos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "skyr",
+      "quantity": 100
+     },
+     {
+      "foodId": "berries",
+      "quantity": 65
+     }
+    ]
+   },
+   "outside": false
+  }
+ ],
+ "goals": {
+  "goncalo": {
+   "kcal": 3000,
+   "protein": 185,
+   "carbs": 375,
+   "fat": 85
+  },
+  "ines": {
+   "kcal": 1700,
+   "protein": 130,
+   "carbs": 170,
+   "fat": 55
+  }
+ }
+}
