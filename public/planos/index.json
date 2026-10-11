@@ -1,3 +1,7 @@
 [
-  { "file": "semana-2026-10-12.json", "title": "Semana de 12 a 18 de outubro", "description": "Sem almoço. Gonçalo ~3000 kcal / 185 g P · Inês ~1700 kcal / 130 g P. Jantares com salmão, hambúrguer misto e costeletas de cachaço." }
+  {
+    "file": "semana-2026-10-12.json",
+    "title": "Semana de 12 a 18 de outubro",
+    "description": "Gonçalo sem almoço (~3000 kcal / 185 g P); Inês com almoço em casa (~1700 kcal / 130 g P). Jantares com salmão, hambúrguer misto e costeletas de cachaço."
+  }
 ]

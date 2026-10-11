@@ -116,6 +116,22 @@
    "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
   },
   {
+   "id": "chicken",
+   "name": "Peito de frango",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "cru, sem osso",
+   "section": "Carne e peixe",
+   "nutrition": {
+    "kcal": 110.0,
+    "protein": 23.0,
+    "carbs": 0.0,
+    "fat": 1.8
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
    "id": "egg",
    "name": "Ovo médio",
    "unit": "un",
@@ -247,6 +263,22 @@
    "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
   },
   {
+   "id": "passata",
+   "name": "Polpa de tomate",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "tal como vendido",
+   "section": "Conservas",
+   "nutrition": {
+    "kcal": 30.0,
+    "protein": 1.5,
+    "carbs": 4.5,
+    "fat": 0.3
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
    "id": "peanut",
    "name": "Manteiga de amendoim",
    "unit": "g",
@@ -354,6 +386,22 @@
     "protein": 11.0,
     "carbs": 4.0,
     "fat": 0.2
+   },
+   "estimated": true,
+   "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
+  },
+  {
+   "id": "spaghetti",
+   "name": "Massa esparguete",
+   "unit": "g",
+   "basis": 100.0,
+   "state": "seco",
+   "section": "Mercearia",
+   "nutrition": {
+    "kcal": 359.0,
+    "protein": 12.5,
+    "carbs": 72.0,
+    "fat": 1.5
    },
    "estimated": true,
    "source": "Exemplo genérico estimado; confirmar no rótulo do produto."
@@ -802,6 +850,107 @@
    ]
   },
   {
+   "id": "pl-massa-atum",
+   "name": "Esparguete com atum e tomate",
+   "category": "Almoço",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "spaghetti",
+     "quantity": 70
+    },
+    {
+     "foodId": "tuna",
+     "quantity": 80
+    },
+    {
+     "foodId": "passata",
+     "quantity": 120
+    },
+    {
+     "foodId": "oil",
+     "quantity": 5
+    }
+   ],
+   "steps": "Cozer o esparguete segundo a embalagem. Aquecer a polpa de tomate com o azeite, juntar o atum escorrido e envolver na massa.",
+   "minutes": 20,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-frango-arroz",
+   "name": "Frango salteado com arroz e brócolos",
+   "category": "Almoço",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "chicken",
+     "quantity": 130
+    },
+    {
+     "foodId": "rice",
+     "quantity": 60
+    },
+    {
+     "foodId": "broccoli",
+     "quantity": 150
+    },
+    {
+     "foodId": "oil",
+     "quantity": 5
+    }
+   ],
+   "steps": "Cozer o arroz. Cortar o frango em tiras e saltear no azeite até estar completamente cozinhado. Juntar os brócolos cozidos e servir com o arroz.",
+   "minutes": 25,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
+   "id": "pl-omelete",
+   "name": "Omelete de fiambre com salada e pão",
+   "category": "Almoço",
+   "servings": 1,
+   "ingredients": [
+    {
+     "foodId": "egg",
+     "quantity": 2
+    },
+    {
+     "foodId": "turkeyham",
+     "quantity": 40
+    },
+    {
+     "foodId": "bread",
+     "quantity": 50
+    },
+    {
+     "foodId": "lettuce",
+     "quantity": 50
+    },
+    {
+     "foodId": "tomato",
+     "quantity": 100
+    },
+    {
+     "foodId": "oil",
+     "quantity": 4
+    }
+   ],
+   "steps": "Bater os ovos, juntar o fiambre às tiras e cozinhar a omelete na frigideira com o azeite. Servir com salada de alface e tomate e o pão.",
+   "minutes": 10,
+   "favorite": false,
+   "example": false,
+   "tags": [
+    "Plano 12–18 out"
+   ]
+  },
+  {
    "id": "pl-batido",
    "name": "Batido de whey, leite e aveia",
    "category": "Ceia",
@@ -854,7 +1003,7 @@
  ],
  "meals": [
   {
-   "id": "4e1ddc2c-389c-4094-8db5-ec47711259ff",
+   "id": "abecd43b-3d14-41d6-a44a-310c3c3787ed",
    "date": "2026-10-12",
    "slot": "Pequeno-almoço",
    "recipeId": "pl-papas",
@@ -885,11 +1034,11 @@
     "ines": [
      {
       "foodId": "milk",
-      "quantity": 110
+      "quantity": 160
      },
      {
       "foodId": "oats",
-      "quantity": 25
+      "quantity": 40
      },
      {
       "foodId": "whey",
@@ -897,18 +1046,18 @@
      },
      {
       "foodId": "banana",
-      "quantity": 45
+      "quantity": 65
      },
      {
       "foodId": "peanut",
-      "quantity": 11
+      "quantity": 15
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "cb800d2d-8abe-4153-82b5-ddef421b02f6",
+   "id": "8e9356f4-ca05-4eb8-8619-21d3d8c28ac2",
    "date": "2026-10-12",
    "slot": "Lanche da manhã",
    "recipeId": "pl-mimosa",
@@ -935,18 +1084,14 @@
      },
      {
       "foodId": "banana",
-      "quantity": 120
-     },
-     {
-      "foodId": "nuts",
-      "quantity": 20
+      "quantity": 80
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "694a895e-060f-497e-bb72-9c99ff81ed5b",
+   "id": "02b58ddb-0ed4-41b1-8637-4367e7a28cf3",
    "date": "2026-10-12",
    "slot": "Lanche da tarde",
    "recipeId": "pl-sandes",
@@ -973,26 +1118,22 @@
     "ines": [
      {
       "foodId": "bread",
-      "quantity": 55
+      "quantity": 60
      },
      {
       "foodId": "turkeyham",
-      "quantity": 35
+      "quantity": 55
      },
      {
       "foodId": "lettuce",
       "quantity": 15
-     },
-     {
-      "foodId": "mimosa-protein-cocoa",
-      "quantity": 250
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "a79c1b8b-43a3-4af9-9e3a-8ee1b32cdc98",
+   "id": "8d574288-708d-4241-9648-199c8d28bdfc",
    "date": "2026-10-12",
    "slot": "Jantar",
    "recipeId": "pl-salmao-bd",
@@ -1019,11 +1160,11 @@
     "ines": [
      {
       "foodId": "salmon",
-      "quantity": 140
+      "quantity": 130
      },
      {
       "foodId": "potato",
-      "quantity": 210
+      "quantity": 125
      },
      {
       "foodId": "broccoli",
@@ -1031,14 +1172,42 @@
      },
      {
       "foodId": "oil",
-      "quantity": 6
+      "quantity": 7
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "11884e62-fd35-4a2a-a02e-7b99c991036d",
+   "id": "42d18279-20c3-4627-9eac-6832e26517d0",
+   "date": "2026-10-12",
+   "slot": "Almoço",
+   "recipeId": "pl-massa-atum",
+   "name": "Esparguete com atum e tomate",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "spaghetti",
+      "quantity": 35
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 50
+     },
+     {
+      "foodId": "passata",
+      "quantity": 95
+     },
+     {
+      "foodId": "oil",
+      "quantity": 7
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "1061108b-29e6-468e-a037-7217957d6691",
    "date": "2026-10-12",
    "slot": "Ceia",
    "recipeId": "pl-batido",
@@ -1062,7 +1231,7 @@
    "outside": false
   },
   {
-   "id": "c7cbaa40-a83d-43fe-9fdc-2d7066a24d20",
+   "id": "39d366fe-0359-45f8-8989-0ee9dec50339",
    "date": "2026-10-12",
    "slot": "Ceia",
    "recipeId": "pl-skyr-ceia",
@@ -1082,7 +1251,7 @@
    "outside": false
   },
   {
-   "id": "faaf9b18-b9b3-4e14-bf59-628b3d48c7d4",
+   "id": "4b76da68-a588-4df2-95ed-0ea12f9f0432",
    "date": "2026-10-13",
    "slot": "Pequeno-almoço",
    "recipeId": "pl-ovos",
@@ -1117,11 +1286,11 @@
      },
      {
       "foodId": "turkeyham",
-      "quantity": 40
+      "quantity": 25
      },
      {
       "foodId": "bread",
-      "quantity": 45
+      "quantity": 35
      },
      {
       "foodId": "tomato",
@@ -1136,7 +1305,7 @@
    "outside": false
   },
   {
-   "id": "096c578c-8e56-4141-bcf7-6e22dcdfd5b1",
+   "id": "441f4cec-f670-43bf-83b5-76e69194ed41",
    "date": "2026-10-13",
    "slot": "Lanche da manhã",
    "recipeId": "pl-pao-maca",
@@ -1167,11 +1336,11 @@
      },
      {
       "foodId": "bread",
-      "quantity": 45
+      "quantity": 30
      },
      {
       "foodId": "peanut",
-      "quantity": 11
+      "quantity": 5
      },
      {
       "foodId": "apple",
@@ -1182,7 +1351,7 @@
    "outside": false
   },
   {
-   "id": "150ce3d0-8eae-4a22-a45f-ed9071bb731e",
+   "id": "dbd77a9c-63b2-4a22-99b2-beca35743291",
    "date": "2026-10-13",
    "slot": "Lanche da tarde",
    "recipeId": "pl-wrap",
@@ -1209,11 +1378,11 @@
     "ines": [
      {
       "foodId": "wrap",
-      "quantity": 35
+      "quantity": 30
      },
      {
       "foodId": "tuna",
-      "quantity": 80
+      "quantity": 50
      },
      {
       "foodId": "lettuce",
@@ -1228,7 +1397,7 @@
    "outside": false
   },
   {
-   "id": "2b453bec-f6f9-4194-a8b1-20a0756f7bec",
+   "id": "01e38e37-4557-4494-9680-2837818e1d71",
    "date": "2026-10-13",
    "slot": "Jantar",
    "recipeId": "pl-hamburguer",
@@ -1271,7 +1440,7 @@
      },
      {
       "foodId": "potato",
-      "quantity": 115
+      "quantity": 75
      },
      {
       "foodId": "lettuce",
@@ -1283,14 +1452,42 @@
      },
      {
       "foodId": "oil",
-      "quantity": 3
+      "quantity": 2
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "4ba1cb57-a699-48ba-8dbb-d4e78c5b9d52",
+   "id": "b8f6cd7c-7c59-402c-ab0b-6e9e81945d81",
+   "date": "2026-10-13",
+   "slot": "Almoço",
+   "recipeId": "pl-frango-arroz",
+   "name": "Frango salteado com arroz e brócolos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "chicken",
+      "quantity": 80
+     },
+     {
+      "foodId": "rice",
+      "quantity": 30
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 120
+     },
+     {
+      "foodId": "oil",
+      "quantity": 4
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "5606133f-43be-4857-afce-15a3092f57d6",
    "date": "2026-10-13",
    "slot": "Ceia",
    "recipeId": "pl-batido",
@@ -1314,7 +1511,7 @@
    "outside": false
   },
   {
-   "id": "345316a4-fe48-40f1-b6a2-d1faa9dc06ff",
+   "id": "8edfd25d-b75e-485f-8133-7ab22ef6d6f9",
    "date": "2026-10-13",
    "slot": "Ceia",
    "recipeId": "pl-skyr-ceia",
@@ -1323,7 +1520,7 @@
     "ines": [
      {
       "foodId": "skyr",
-      "quantity": 165
+      "quantity": 100
      },
      {
       "foodId": "berries",
@@ -1334,7 +1531,7 @@
    "outside": false
   },
   {
-   "id": "d5067f24-2a4b-4348-aa8b-4d5849f894b2",
+   "id": "6b4b3976-f152-45d3-8ca4-0ecd9e2e2d49",
    "date": "2026-10-14",
    "slot": "Pequeno-almoço",
    "recipeId": "pl-skyr",
@@ -1365,11 +1562,11 @@
     "ines": [
      {
       "foodId": "skyr",
-      "quantity": 120
+      "quantity": 145
      },
      {
       "foodId": "oats",
-      "quantity": 35
+      "quantity": 25
      },
      {
       "foodId": "berries",
@@ -1377,18 +1574,18 @@
      },
      {
       "foodId": "banana",
-      "quantity": 55
+      "quantity": 45
      },
      {
       "foodId": "peanut",
-      "quantity": 9
+      "quantity": 7
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "a22a72ad-3312-4faf-bf0e-9d465de2b457",
+   "id": "163cfe8a-cd67-4289-a4e6-1336197ed02e",
    "date": "2026-10-14",
    "slot": "Lanche da manhã",
    "recipeId": "pl-mimosa",
@@ -1415,18 +1612,14 @@
      },
      {
       "foodId": "banana",
-      "quantity": 110
-     },
-     {
-      "foodId": "nuts",
-      "quantity": 14
+      "quantity": 105
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "e8794f54-3f95-4bca-b14e-4b6fa92f6679",
+   "id": "764526fa-fab6-4a82-af49-0b5f9b831399",
    "date": "2026-10-14",
    "slot": "Lanche da tarde",
    "recipeId": "pl-sandes",
@@ -1453,26 +1646,22 @@
     "ines": [
      {
       "foodId": "bread",
-      "quantity": 60
+      "quantity": 50
      },
      {
       "foodId": "turkeyham",
-      "quantity": 45
+      "quantity": 50
      },
      {
       "foodId": "lettuce",
       "quantity": 15
-     },
-     {
-      "foodId": "mimosa-protein-cocoa",
-      "quantity": 250
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "36b2aaaf-3d19-4cb6-bef3-d72ca278ebe5",
+   "id": "8fa697d6-58de-4054-9850-cb9bc1837d7f",
    "date": "2026-10-14",
    "slot": "Jantar",
    "recipeId": "pl-costeletas",
@@ -1503,11 +1692,11 @@
     "ines": [
      {
       "foodId": "porkneck",
-      "quantity": 150
+      "quantity": 140
      },
      {
       "foodId": "potatowhite",
-      "quantity": 215
+      "quantity": 220
      },
      {
       "foodId": "lettuce",
@@ -1519,14 +1708,50 @@
      },
      {
       "foodId": "oil",
-      "quantity": 5
+      "quantity": 4
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "bc04bef6-0339-48fe-bedc-a6a9a43a155e",
+   "id": "06c51640-c276-464b-a058-a384c69d8807",
+   "date": "2026-10-14",
+   "slot": "Almoço",
+   "recipeId": "pl-omelete",
+   "name": "Omelete de fiambre com salada e pão",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "egg",
+      "quantity": 2
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 35
+     },
+     {
+      "foodId": "bread",
+      "quantity": 40
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 40
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "8a953ce9-9468-4792-88ac-072b28a8bbe5",
    "date": "2026-10-14",
    "slot": "Ceia",
    "recipeId": "pl-batido",
@@ -1550,7 +1775,7 @@
    "outside": false
   },
   {
-   "id": "bdb30ac6-5f63-4bb1-89f7-04eb48e54111",
+   "id": "38386229-6f7b-4224-9850-4abe69e7873b",
    "date": "2026-10-14",
    "slot": "Ceia",
    "recipeId": "pl-skyr-ceia",
@@ -1559,7 +1784,7 @@
     "ines": [
      {
       "foodId": "skyr",
-      "quantity": 100
+      "quantity": 130
      },
      {
       "foodId": "berries",
@@ -1570,7 +1795,7 @@
    "outside": false
   },
   {
-   "id": "518cdd60-ba40-4248-a613-309734040406",
+   "id": "8f21a17d-f7cf-40be-8b22-5b85bb27d876",
    "date": "2026-10-15",
    "slot": "Pequeno-almoço",
    "recipeId": "pl-papas",
@@ -1601,30 +1826,30 @@
     "ines": [
      {
       "foodId": "milk",
-      "quantity": 140
+      "quantity": 130
      },
      {
       "foodId": "oats",
-      "quantity": 35
+      "quantity": 30
      },
      {
       "foodId": "whey",
-      "quantity": 20
+      "quantity": 15
      },
      {
       "foodId": "banana",
-      "quantity": 55
+      "quantity": 50
      },
      {
       "foodId": "peanut",
-      "quantity": 11
+      "quantity": 10
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "d40b6c2a-21fb-4932-9480-57e70d007c54",
+   "id": "5a4accf6-d347-4bc2-8f7f-e20942cf1f4d",
    "date": "2026-10-15",
    "slot": "Lanche da manhã",
    "recipeId": "pl-pao-maca",
@@ -1655,11 +1880,11 @@
      },
      {
       "foodId": "bread",
-      "quantity": 50
+      "quantity": 30
      },
      {
       "foodId": "peanut",
-      "quantity": 18
+      "quantity": 14
      },
      {
       "foodId": "apple",
@@ -1670,7 +1895,7 @@
    "outside": false
   },
   {
-   "id": "77e0d22e-89cc-4320-9530-89e13863a898",
+   "id": "9c1039f3-e239-48e6-b5f3-39c2ecedcc7c",
    "date": "2026-10-15",
    "slot": "Lanche da tarde",
    "recipeId": "pl-wrap",
@@ -1697,11 +1922,11 @@
     "ines": [
      {
       "foodId": "wrap",
-      "quantity": 55
+      "quantity": 30
      },
      {
       "foodId": "tuna",
-      "quantity": 60
+      "quantity": 50
      },
      {
       "foodId": "lettuce",
@@ -1716,7 +1941,7 @@
    "outside": false
   },
   {
-   "id": "749c9239-7ddd-43ed-b180-490bf0d538b2",
+   "id": "479c3dc6-39ae-42ec-9618-6dc33e04ee17",
    "date": "2026-10-15",
    "slot": "Jantar",
    "recipeId": "pl-salmao-arroz",
@@ -1743,7 +1968,7 @@
     "ines": [
      {
       "foodId": "salmon",
-      "quantity": 140
+      "quantity": 130
      },
      {
       "foodId": "rice",
@@ -1762,7 +1987,35 @@
    "outside": false
   },
   {
-   "id": "85b99a53-042f-48f8-9fe5-6787c0656d2c",
+   "id": "b0b865f2-4234-47f3-97d9-d325cc477a42",
+   "date": "2026-10-15",
+   "slot": "Almoço",
+   "recipeId": "pl-massa-atum",
+   "name": "Esparguete com atum e tomate",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "spaghetti",
+      "quantity": 35
+     },
+     {
+      "foodId": "tuna",
+      "quantity": 50
+     },
+     {
+      "foodId": "passata",
+      "quantity": 95
+     },
+     {
+      "foodId": "oil",
+      "quantity": 6
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "7b31ac0a-45c9-4f09-bda3-f2dcd38b95de",
    "date": "2026-10-15",
    "slot": "Ceia",
    "recipeId": "pl-batido",
@@ -1786,7 +2039,7 @@
    "outside": false
   },
   {
-   "id": "c2dfd7c8-4fa0-41fe-9c00-91470c64d92c",
+   "id": "e58c47c7-5eac-4002-a3b0-7289f727d1e1",
    "date": "2026-10-15",
    "slot": "Ceia",
    "recipeId": "pl-skyr-ceia",
@@ -1795,7 +2048,7 @@
     "ines": [
      {
       "foodId": "skyr",
-      "quantity": 120
+      "quantity": 100
      },
      {
       "foodId": "berries",
@@ -1806,7 +2059,7 @@
    "outside": false
   },
   {
-   "id": "db0e9ea7-5ff8-41e0-b51c-2f91511a3db8",
+   "id": "95e067dd-e0cc-4185-b61b-9efd5eb34f6f",
    "date": "2026-10-16",
    "slot": "Pequeno-almoço",
    "recipeId": "pl-ovos",
@@ -1845,7 +2098,7 @@
      },
      {
       "foodId": "bread",
-      "quantity": 45
+      "quantity": 40
      },
      {
       "foodId": "tomato",
@@ -1860,7 +2113,7 @@
    "outside": false
   },
   {
-   "id": "1dc94d71-0340-4d6c-ab65-1fdcbdb288b4",
+   "id": "d1e3806d-221b-4050-be31-7ea4fe75fb7b",
    "date": "2026-10-16",
    "slot": "Lanche da manhã",
    "recipeId": "pl-mimosa",
@@ -1887,18 +2140,14 @@
      },
      {
       "foodId": "banana",
-      "quantity": 105
-     },
-     {
-      "foodId": "nuts",
-      "quantity": 11
+      "quantity": 85
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "e1a94e8e-5a2c-46f8-9fc3-93bced92434b",
+   "id": "85313632-0c96-4bc9-969a-3a517ace5d56",
    "date": "2026-10-16",
    "slot": "Lanche da tarde",
    "recipeId": "pl-sandes",
@@ -1925,26 +2174,22 @@
     "ines": [
      {
       "foodId": "bread",
-      "quantity": 50
+      "quantity": 45
      },
      {
       "foodId": "turkeyham",
-      "quantity": 45
+      "quantity": 50
      },
      {
       "foodId": "lettuce",
       "quantity": 15
-     },
-     {
-      "foodId": "mimosa-protein-cocoa",
-      "quantity": 250
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "c96911ca-d842-4915-b1c6-fcc36dadaee8",
+   "id": "f97d5c1c-1dbb-4b14-8bbc-7e9b1c9bb9ad",
    "date": "2026-10-16",
    "slot": "Jantar",
    "recipeId": "pl-hamburguer",
@@ -1987,7 +2232,7 @@
      },
      {
       "foodId": "potato",
-      "quantity": 125
+      "quantity": 95
      },
      {
       "foodId": "lettuce",
@@ -2006,7 +2251,35 @@
    "outside": false
   },
   {
-   "id": "c0e12c06-8f24-4b28-857c-90d7e55be10c",
+   "id": "fc2bb562-354a-4924-b430-03fff7bfbc5e",
+   "date": "2026-10-16",
+   "slot": "Almoço",
+   "recipeId": "pl-frango-arroz",
+   "name": "Frango salteado com arroz e brócolos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "chicken",
+      "quantity": 80
+     },
+     {
+      "foodId": "rice",
+      "quantity": 30
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 120
+     },
+     {
+      "foodId": "oil",
+      "quantity": 5
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "f10bacfc-83cb-44c9-8c1b-f40bbbb5cea8",
    "date": "2026-10-16",
    "slot": "Ceia",
    "recipeId": "pl-batido",
@@ -2030,7 +2303,7 @@
    "outside": false
   },
   {
-   "id": "3cbe9361-6ac3-4b25-98d7-85b33cab703b",
+   "id": "493d7cb4-f6b4-42bf-a229-e00a802393cb",
    "date": "2026-10-16",
    "slot": "Ceia",
    "recipeId": "pl-skyr-ceia",
@@ -2039,7 +2312,7 @@
     "ines": [
      {
       "foodId": "skyr",
-      "quantity": 100
+      "quantity": 115
      },
      {
       "foodId": "berries",
@@ -2050,7 +2323,7 @@
    "outside": false
   },
   {
-   "id": "ae77824b-f501-4db8-ae7f-8de25ebc3c9a",
+   "id": "179631bb-a9b0-4c20-bee3-5c3b18fe3532",
    "date": "2026-10-17",
    "slot": "Pequeno-almoço",
    "recipeId": "pl-skyr",
@@ -2081,11 +2354,11 @@
     "ines": [
      {
       "foodId": "skyr",
-      "quantity": 165
+      "quantity": 120
      },
      {
       "foodId": "oats",
-      "quantity": 35
+      "quantity": 25
      },
      {
       "foodId": "berries",
@@ -2093,18 +2366,18 @@
      },
      {
       "foodId": "banana",
-      "quantity": 50
+      "quantity": 40
      },
      {
       "foodId": "peanut",
-      "quantity": 9
+      "quantity": 5
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "556ea420-9dc5-4859-9252-f90ab2804f36",
+   "id": "6b0b0714-b5ad-40a7-a248-53ece982af14",
    "date": "2026-10-17",
    "slot": "Lanche da manhã",
    "recipeId": "pl-pao-maca",
@@ -2135,11 +2408,11 @@
      },
      {
       "foodId": "bread",
-      "quantity": 50
+      "quantity": 35
      },
      {
       "foodId": "peanut",
-      "quantity": 14
+      "quantity": 5
      },
      {
       "foodId": "apple",
@@ -2150,7 +2423,7 @@
    "outside": false
   },
   {
-   "id": "58fb54dd-16d2-406a-8e0e-04b8714b5b61",
+   "id": "65dc5801-fffd-4aec-a9b7-ea8a0799bed3",
    "date": "2026-10-17",
    "slot": "Lanche da tarde",
    "recipeId": "pl-wrap",
@@ -2177,11 +2450,11 @@
     "ines": [
      {
       "foodId": "wrap",
-      "quantity": 45
+      "quantity": 30
      },
      {
       "foodId": "tuna",
-      "quantity": 70
+      "quantity": 50
      },
      {
       "foodId": "lettuce",
@@ -2196,7 +2469,7 @@
    "outside": false
   },
   {
-   "id": "e38725d5-75c1-459e-8d9a-21a66e8bf1aa",
+   "id": "d4ed6226-d303-4af0-ab4d-907a1c517ee0",
    "date": "2026-10-17",
    "slot": "Jantar",
    "recipeId": "pl-costeletas",
@@ -2227,11 +2500,11 @@
     "ines": [
      {
       "foodId": "porkneck",
-      "quantity": 150
+      "quantity": 140
      },
      {
       "foodId": "potatowhite",
-      "quantity": 200
+      "quantity": 215
      },
      {
       "foodId": "lettuce",
@@ -2243,14 +2516,50 @@
      },
      {
       "foodId": "oil",
-      "quantity": 5
+      "quantity": 3
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "0e2c53c4-6dfd-4bc7-8292-6c8f5ba7ce80",
+   "id": "4ae1ef41-cfe5-4b79-a342-51a87884c0bc",
+   "date": "2026-10-17",
+   "slot": "Almoço",
+   "recipeId": "pl-omelete",
+   "name": "Omelete de fiambre com salada e pão",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "egg",
+      "quantity": 2
+     },
+     {
+      "foodId": "turkeyham",
+      "quantity": 30
+     },
+     {
+      "foodId": "bread",
+      "quantity": 35
+     },
+     {
+      "foodId": "lettuce",
+      "quantity": 40
+     },
+     {
+      "foodId": "tomato",
+      "quantity": 80
+     },
+     {
+      "foodId": "oil",
+      "quantity": 3
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "d8981c58-8e7f-4086-8bec-88e9cefec352",
    "date": "2026-10-17",
    "slot": "Ceia",
    "recipeId": "pl-batido",
@@ -2274,7 +2583,7 @@
    "outside": false
   },
   {
-   "id": "f23c8a49-a8f4-4a71-9c60-830d173b0ef4",
+   "id": "80377781-aa64-491b-87ff-d71a1dce12aa",
    "date": "2026-10-17",
    "slot": "Ceia",
    "recipeId": "pl-skyr-ceia",
@@ -2283,7 +2592,7 @@
     "ines": [
      {
       "foodId": "skyr",
-      "quantity": 145
+      "quantity": 110
      },
      {
       "foodId": "berries",
@@ -2294,7 +2603,7 @@
    "outside": false
   },
   {
-   "id": "b18ef603-3367-456f-8e7d-dc6ceb00404d",
+   "id": "18a6165e-c301-43be-9139-9ebc4f01c0bf",
    "date": "2026-10-18",
    "slot": "Pequeno-almoço",
    "recipeId": "pl-papas",
@@ -2325,11 +2634,11 @@
     "ines": [
      {
       "foodId": "milk",
-      "quantity": 110
+      "quantity": 150
      },
      {
       "foodId": "oats",
-      "quantity": 25
+      "quantity": 35
      },
      {
       "foodId": "whey",
@@ -2337,18 +2646,18 @@
      },
      {
       "foodId": "banana",
-      "quantity": 45
+      "quantity": 60
      },
      {
       "foodId": "peanut",
-      "quantity": 11
+      "quantity": 14
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "14292ee8-df09-4009-ba8f-2b5fce4fb574",
+   "id": "769db8a7-762e-47a1-b9bf-fc7613096eb7",
    "date": "2026-10-18",
    "slot": "Lanche da manhã",
    "recipeId": "pl-mimosa",
@@ -2375,18 +2684,14 @@
      },
      {
       "foodId": "banana",
-      "quantity": 120
-     },
-     {
-      "foodId": "nuts",
-      "quantity": 20
+      "quantity": 90
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "527c97d6-eef7-4b5e-b155-afd8f51afa22",
+   "id": "f5f6349c-56b3-4a26-bc1d-ba9c698f6f14",
    "date": "2026-10-18",
    "slot": "Lanche da tarde",
    "recipeId": "pl-sandes",
@@ -2413,26 +2718,22 @@
     "ines": [
      {
       "foodId": "bread",
-      "quantity": 55
+      "quantity": 60
      },
      {
       "foodId": "turkeyham",
-      "quantity": 35
+      "quantity": 45
      },
      {
       "foodId": "lettuce",
       "quantity": 15
-     },
-     {
-      "foodId": "mimosa-protein-cocoa",
-      "quantity": 250
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "44ab7f08-992f-4e1d-838e-34dca246579f",
+   "id": "425e39c5-5c6d-4760-a728-82cd0b9e2cdf",
    "date": "2026-10-18",
    "slot": "Jantar",
    "recipeId": "pl-salmao-bd",
@@ -2459,11 +2760,11 @@
     "ines": [
      {
       "foodId": "salmon",
-      "quantity": 140
+      "quantity": 130
      },
      {
       "foodId": "potato",
-      "quantity": 210
+      "quantity": 125
      },
      {
       "foodId": "broccoli",
@@ -2471,14 +2772,42 @@
      },
      {
       "foodId": "oil",
-      "quantity": 6
+      "quantity": 7
      }
     ]
    },
    "outside": false
   },
   {
-   "id": "81861847-1fc8-4f8a-a33e-71114a58279a",
+   "id": "5b921014-5c48-4a1a-9b41-52b5c281b2be",
+   "date": "2026-10-18",
+   "slot": "Almoço",
+   "recipeId": "pl-frango-arroz",
+   "name": "Frango salteado com arroz e brócolos",
+   "portions": {
+    "ines": [
+     {
+      "foodId": "chicken",
+      "quantity": 80
+     },
+     {
+      "foodId": "rice",
+      "quantity": 30
+     },
+     {
+      "foodId": "broccoli",
+      "quantity": 120
+     },
+     {
+      "foodId": "oil",
+      "quantity": 7
+     }
+    ]
+   },
+   "outside": false
+  },
+  {
+   "id": "18a763f1-7ede-4523-a1fc-59388b2038fe",
    "date": "2026-10-18",
    "slot": "Ceia",
    "recipeId": "pl-batido",
@@ -2502,7 +2831,7 @@
    "outside": false
   },
   {
-   "id": "b0c0de6d-31a9-4207-9349-bf40abef1b8c",
+   "id": "ab4b8c8d-f552-4e93-8182-1106d84e8333",
    "date": "2026-10-18",
    "slot": "Ceia",
    "recipeId": "pl-skyr-ceia",
